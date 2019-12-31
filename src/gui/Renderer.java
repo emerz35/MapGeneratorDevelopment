@@ -44,7 +44,7 @@ public class Renderer implements Runnable{
         //Creates the graphics to paint to
         BufferStrategy bs = main.getBufferStrategy();
         Graphics2D g = (Graphics2D)bs.getDrawGraphics();
-
+        //Draws the relevant features to Graphics2d
         map.renderImage(g);
         
         //Displays the graphics to the window
