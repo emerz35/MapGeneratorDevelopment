@@ -27,7 +27,7 @@ public class Map {
      */
     public void renderImage(Graphics2D g) {
         AffineTransform t = AffineTransform.getTranslateInstance(topX, topY);
-        t.concatenate(AffineTransform.getScaleInstance(zoom, zoom));
+        t.scale(zoom, zoom);
         g.drawImage(image, t, null);
     }
     /**
@@ -43,7 +43,10 @@ public class Map {
      * @param change The number of mouse wheel 'clicks' that have been moved 
      */
     public void zoom(int change){
-        zoom*=Math.pow(2, change);
+        double zoomChange = Math.pow(2, change);
+        zoom*=zoomChange;
+        topX*=zoomChange;
+        topY*=zoomChange;
         if(zoom>MAX_ZOOM)zoom = MAX_ZOOM;
         else if(zoom<MIN_ZOOM) zoom =  MIN_ZOOM;
     }
@@ -65,6 +68,6 @@ public class Map {
     public void translateY(int dy){
         topY+=dy;
         if(topY>0) topY = 0;
-        else if(topY+image.getHeight()*zoom<Main.M_HEIGHT)topX=Main.M_HEIGHT-(int)(image.getHeight()*zoom);
+        else if(topY+image.getHeight()*zoom<Main.M_HEIGHT)topY=Main.M_HEIGHT-(int)(image.getHeight()*zoom);
     }
 }
