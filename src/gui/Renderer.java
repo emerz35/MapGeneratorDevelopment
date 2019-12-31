@@ -41,9 +41,9 @@ public class Renderer implements Runnable{
         }catch(IOException e){
         }
         handler = new GUIHandler(map);
-        testSlider = new GUISlider(1000,1500,0,100,10,200,true);
+        testSlider = new GUISlider(500,500,0,100,10,50,true);
         handler.sliders.add(testSlider);
-        testBtn = new GUIButton(()->System.out.println("Button works. Slider has value " + testSlider.getNum()), 1000,1000,200,50);
+        testBtn = new GUIButton(()->System.out.println("Button works. Slider has value " + testSlider.getNum()), 500,550,50,10);
         handler.btns.add(testBtn);
     }
     

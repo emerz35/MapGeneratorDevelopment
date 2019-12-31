@@ -37,6 +37,7 @@ public class GUISlider {
      * @param g 
      */
     public void paint(Graphics2D g) {
+        
         g.setColor(Color.black);
         
         //Draws horizontal line
