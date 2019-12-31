@@ -8,6 +8,7 @@ public class GUISlider {
     private final int absX,absY,length,sHeight = 12,sWidth = 6, min,max,lineSpacing;
 
     private final boolean sticky;
+    public boolean sliding = false;
 
     private int sX;
     
