@@ -27,6 +27,9 @@ public class Main extends Canvas{
         requestFocus();
         createBufferStrategy(4);
         Renderer renderer = new Renderer(this);
+        this.addMouseListener(renderer.handler);
+        this.addMouseMotionListener(renderer.handler);
+        this.addMouseWheelListener(renderer.handler);
         renderThread = new Thread(renderer);
         renderThread.setDaemon(true);
         renderThread.start();

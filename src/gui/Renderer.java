@@ -22,6 +22,8 @@ public class Renderer implements Runnable{
     private static final long DELAY = 1000L/60L;
     private long now;
     
+    public GUIHandler handler;
+    
     GUIButton testBtn; 
     GUISlider testSlider; 
     
@@ -38,9 +40,11 @@ public class Renderer implements Runnable{
         map = new Map(image);
         }catch(IOException e){
         }
-        
+        handler = new GUIHandler(map);
         testSlider = new GUISlider(1000,1500,0,100,10,200,true);
+        handler.sliders.add(testSlider);
         testBtn = new GUIButton(()->System.out.println("Button works. Slider has value " + testSlider.getNum()), 1000,1000,200,50);
+        handler.btns.add(testBtn);
     }
     
     /**
