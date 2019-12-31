@@ -55,6 +55,7 @@ public class Renderer implements Runnable{
         BufferStrategy bs = main.getBufferStrategy();
         Graphics2D g = (Graphics2D)bs.getDrawGraphics();
         //Draws the relevant features to Graphics2d
+        g.fillRect(0, 0, Main.M_WIDTH, Main.M_HEIGHT);
         map.renderImage(g);
         testSlider.paint(g);
         testBtn.paint(g);
