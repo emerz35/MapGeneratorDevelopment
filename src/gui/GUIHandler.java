@@ -39,15 +39,22 @@ public class GUIHandler extends MouseAdapter{
     
     @Override 
     public void mouseWheelMoved(MouseWheelEvent e){
+       
         map.zoom(-e.getWheelRotation());
+        map.translateX((int)((double)(map.topX-e.getX())*(map.zoom/(map.zoom+e.getWheelRotation())-1)));
+        map.translateY((int)((double)(map.topY-e.getY())*(map.zoom/(map.zoom+e.getWheelRotation())-1)));
+        
     }
     
     @Override
     public void mouseDragged(MouseEvent e){
-        map.translateX(e.getX()-prevX);
-        map.translateY(e.getY()-prevY);
-        prevX = e.getX();
-        prevY = e.getY();
+        sliders.stream().filter(x->x.sliding).forEach(x->x.updateX(e.getX()));
+        if(!sliders.stream().anyMatch(x->x.sliding)){
+            map.translateX(e.getX()-prevX);
+            map.translateY(e.getY()-prevY);
+            prevX = e.getX();
+            prevY = e.getY();
+        }
     }
     
     @Override
