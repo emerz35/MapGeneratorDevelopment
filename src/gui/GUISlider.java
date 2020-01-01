@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 
 public class GUISlider {
 
-    private final int absX,absY,length,sHeight = 12,sWidth = 6, min,max,lineSpacing;
+    private final int absX,absY,length,sHeight = 24,sWidth = sHeight/2, min,max,lineSpacing;
 
     private final boolean sticky;
     public boolean sliding = false;
@@ -49,8 +49,8 @@ public class GUISlider {
         
         int x = 0;
         //draws lines at specific intervals along the slider
-        for(int i = 1; i<max-min;i+=lineSpacing){
-            x = absX+(int)( (double)(i)/(double)(max-min) * (double)length);
+        for(int i = lineSpacing; i<max-min;i+=lineSpacing){
+            x = absX+(int)((double)(i)/(double)(max-min) * (double)length);
             g.drawLine(x,absY+sHeight/4,x,absY-sHeight/4);
         }
         
@@ -65,7 +65,7 @@ public class GUISlider {
      * @return 
      */
     public boolean inBounds(int mx, int my) {
-        return mx>=sX&&mx<=sX+sWidth&&my>=absY+sHeight/2&&my<=absY-sHeight/2;
+        return mx >= sX && mx <= sX+sWidth && my >= absY - sHeight/2 && my <= absY+sHeight;
     }
     
     /**
