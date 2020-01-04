@@ -41,9 +41,9 @@ public class Renderer implements Runnable{
         }catch(IOException e){
         }
         handler = new GUIHandler(map);
-        testSlider = new GUISlider(500,500,0,50,10,50,true);
+        testSlider = new GUISlider(50,500,0,50,10,50,true);
         handler.sliders.add(testSlider);
-        testBtn = new GUIButton(()->System.out.println("Button works. Slider has value " + testSlider.getNum()), 500,550,50,10);
+        testBtn = new GUIButton(()->System.out.println("Button works. Slider has value " + testSlider.getNum()), 50,530,50,25);
         handler.btns.add(testBtn);
     }
     
@@ -57,6 +57,9 @@ public class Renderer implements Runnable{
         //Draws the relevant features to Graphics2d
         g.fillRect(0, 0, Main.M_WIDTH, Main.M_HEIGHT);
         map.renderImage(g);
+        g.setColor(Color.GRAY);
+        g.fill3DRect(0, 0, Main.M_WIDTH/4, Main.M_HEIGHT, true);
+        
         testSlider.paint(g);
         testBtn.paint(g);
         //Displays the graphics to the window

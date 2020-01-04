@@ -40,9 +40,8 @@ public class GUIHandler extends MouseAdapter{
     @Override 
     public void mouseWheelMoved(MouseWheelEvent e){
        
-        map.zoom(-e.getWheelRotation());
-        map.translateX((int)((double)(map.topX-e.getX())*(map.zoom/(map.zoom+e.getWheelRotation())-1)));
-        map.translateY((int)((double)(map.topY-e.getY())*(map.zoom/(map.zoom+e.getWheelRotation())-1)));
+        map.zoom(-e.getWheelRotation(),e.getX(),e.getY());
+        
         
     }
     
