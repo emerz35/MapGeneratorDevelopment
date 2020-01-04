@@ -10,12 +10,13 @@ import main.Main;
 
 public class Map {
     
-    private static final double MAX_ZOOM = 8, MIN_ZOOM = 1;
+    private static final double MAX_ZOOM = 32, MIN_ZOOM = 1;
+    public static final int TOP_LEFT_X = Main.M_WIDTH/4, TOP_LEFT_Y = 0, AREA_WIDTH = 3*Main.M_WIDTH/4, AREA_HEIGHT = Main.M_HEIGHT;
 
     private final BufferedImage image;
     
     public double zoom = 1;
-    public int topX = 0,topY = 0;
+    public int topX = TOP_LEFT_X,topY = TOP_LEFT_Y;
     
     public Map(BufferedImage image){
         this.image = image;
@@ -41,14 +42,26 @@ public class Map {
     /**
      * Zooms the map in or out dependant on the integer change. Math.pow has been used instead of coding own power to handle negative powers 
      * @param change The number of mouse wheel 'clicks' that have been moved 
+     * @param mx 
+     * @param my 
      */
-    public void zoom(int change){
+    public void zoom(int change, int mx, int my){
         double zoomChange = Math.pow(2, change);
         zoom*=zoomChange;
-        topX*=zoomChange;
-        topY*=zoomChange;
         if(zoom>MAX_ZOOM)zoom = MAX_ZOOM;
-        else if(zoom<MIN_ZOOM) zoom =  MIN_ZOOM;
+        else if(zoom<MIN_ZOOM) zoom = MIN_ZOOM;
+        else{
+            if(change>0){
+                translateX(topX-mx);
+                translateY(topY-my);
+            }
+            else{
+                translateX((mx-topX)/2);
+                translateY((my-topY)/2);
+                
+            }
+            
+        }
     }
     
     /**
@@ -57,8 +70,8 @@ public class Map {
      */
     public void translateX(int dx){
         topX+=dx;
-        if(topX>0) topX = 0;
-        else if(topX+image.getWidth()*zoom<Main.M_WIDTH)topX=Main.M_WIDTH-(int)(image.getWidth()*zoom);
+        if(topX>TOP_LEFT_X) topX = TOP_LEFT_X;
+        else if(topX-TOP_LEFT_X+image.getWidth()*zoom<AREA_WIDTH)topX=TOP_LEFT_X+AREA_WIDTH-(int)(image.getWidth()*zoom);
     }
     
     /**
@@ -67,7 +80,7 @@ public class Map {
      */
     public void translateY(int dy){
         topY+=dy;
-        if(topY>0) topY = 0;
-        else if(topY+image.getHeight()*zoom<Main.M_HEIGHT)topY=Main.M_HEIGHT-(int)(image.getHeight()*zoom);
+        if(topY>TOP_LEFT_Y) topY = TOP_LEFT_Y;
+        else if(topY+image.getHeight()*zoom<AREA_HEIGHT)topY=AREA_HEIGHT-(int)(image.getHeight()*zoom);
     }
 }
