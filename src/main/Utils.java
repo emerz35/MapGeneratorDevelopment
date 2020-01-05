@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Utils {
 
-    private static Random R;
+    public static Random R = new Random();
 
     public int distanceSquared(int x1, int y1, int x2, int y2) {
         throw new UnsupportedOperationException("Not supported yet.");

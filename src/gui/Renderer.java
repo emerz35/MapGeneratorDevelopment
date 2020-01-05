@@ -1,5 +1,9 @@
 package gui;
 
+import generation.MapGenerator;
+import generation.altitudegenerators.PerlinNoiseAltitudeGenerator;
+import generation.imagegenerators.MonochromeImageGenerator;
+import generation.mapgenerators.DefaultMapGenerator;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
@@ -17,6 +21,7 @@ import map.Map;
  */
 public class Renderer implements Runnable{
     
+    private MapGenerator generator;
     private Map map;
     private Main main;
     private static final long DELAY = 1000L/60L;
@@ -35,11 +40,8 @@ public class Renderer implements Runnable{
      */
     public Renderer(Main m){
         main = m;
-        try{
-        BufferedImage image = ImageIO.read(new File("images_test\\testMap.png"));
-        map = new Map(image);
-        }catch(IOException e){
-        }
+        generator = new DefaultMapGenerator(null, new PerlinNoiseAltitudeGenerator(),null,null,null,null,new MonochromeImageGenerator());
+        map = generator.generateMap();
         handler = new GUIHandler(map);
         testSlider = new GUISlider(50,500,0,50,10,50,true);
         handler.sliders.add(testSlider);

@@ -2,15 +2,18 @@ package map;
 
 public class Point {
 
-    private int x;
+    public final int x, y;
 
-    private int y;
-
-    private int centroidNum;
-
-    private int altitude;
-
+    public int centroidNum = 0,altitude = 0;
+    
+    public Biome biome = Biome.SEA;
+    
+    public Point(int x, int y){
+        this.x = x;
+        this.y = y;
+    }
+    
     public int distanceSquaredTo(int x, int y) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return (this.x - x)*(this.x - x) + (this.y - y)*(this.y - y);
     }
 }

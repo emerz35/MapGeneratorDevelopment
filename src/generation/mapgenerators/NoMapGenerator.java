@@ -11,7 +11,7 @@ import map.Map;
 public class NoMapGenerator extends MapGenerator{
 
     public NoMapGenerator() {
-        super(null, null, null, null, null, null);
+        super(null, null, null, null, null, null,null);
     }
 
     @Override
