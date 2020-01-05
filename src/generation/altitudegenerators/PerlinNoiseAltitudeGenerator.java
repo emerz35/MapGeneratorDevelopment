@@ -19,7 +19,6 @@ public class PerlinNoiseAltitudeGenerator implements AltitudeGenerator{
             double j = Utils.R.nextDouble();
             Gs[i] = new double[]{Math.cos(2*Math.PI*j),Math.sin(2*Math.PI*j)};
         }
-        System.out.println(Gs[1].length);
         for(int i = 0;i<Ps.length;i++){
             Ps[i] = Utils.R.nextInt(1000);
         }
