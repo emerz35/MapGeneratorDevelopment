@@ -15,10 +15,14 @@ public class GUIHandler extends MouseAdapter{
     public final LinkedList<GUIButton> btns = new LinkedList<>();
     public final LinkedList<GUISlider> sliders = new LinkedList<>();
     
-    private final Map map;
+    private Map map;
     
     private int prevX,prevY;
     public GUIHandler(Map m){
+        map = m;
+    }
+    
+    public void changeMap(Map m){
         map = m;
     }
     

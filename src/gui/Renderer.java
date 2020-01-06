@@ -2,7 +2,7 @@ package gui;
 
 import generation.MapGenerator;
 import generation.altitudegenerators.PerlinNoiseAltitudeGenerator;
-import generation.imagegenerators.BiomeDependantImageGenerator;
+import generation.imagegenerators.MonochromeImageGenerator;
 import generation.landgenerators.LandFromAltitudeGenerator;
 import generation.mapgenerators.DefaultMapGenerator;
 import java.awt.Color;
@@ -26,7 +26,7 @@ public class Renderer implements Runnable{
     
     public GUIHandler handler;
     
-    GUIButton testBtn; 
+    GUIButton generateBtn; 
     GUISlider testSlider; 
     
     boolean running = true;
@@ -37,13 +37,13 @@ public class Renderer implements Runnable{
      */
     public Renderer(Main m){
         main = m;
-        generator = new DefaultMapGenerator(null, new PerlinNoiseAltitudeGenerator(),null,null,null,new LandFromAltitudeGenerator(),new BiomeDependantImageGenerator());
+        generator = new DefaultMapGenerator(null, new PerlinNoiseAltitudeGenerator(),null,null,null,new LandFromAltitudeGenerator(),new MonochromeImageGenerator());
         map = generator.generateMap();
         handler = new GUIHandler(map);
         testSlider = new GUISlider(50,500,0,50,10,50,true);
         handler.sliders.add(testSlider);
-        testBtn = new GUIButton(()->System.out.println("Button works. Slider has value " + testSlider.getNum()), 50,530,50,25);
-        handler.btns.add(testBtn);
+        generateBtn = new GUIButton(()-> {generateMap();System.out.println("New Map Generated");}, 50,530,50,25);
+        handler.btns.add(generateBtn);
     }
     
     /**
@@ -60,7 +60,7 @@ public class Renderer implements Runnable{
         g.fill3DRect(0, 0, Main.M_WIDTH/4, Main.M_HEIGHT, true);
         
         testSlider.paint(g);
-        testBtn.paint(g);
+        generateBtn.paint(g);
         //Displays the graphics to the window
         g.dispose();
         bs.show();
@@ -89,6 +89,11 @@ public class Renderer implements Runnable{
             }
         }
         stop();
+    }
+    
+    private void generateMap(){
+        map = generator.generateMap();
+        handler.changeMap(map);
     }
     
     /**
