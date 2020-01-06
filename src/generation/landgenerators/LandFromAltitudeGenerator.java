@@ -10,7 +10,7 @@ import map.Point;
  */
 public class LandFromAltitudeGenerator implements LandGenerator{
 
-    private final static int LAND_ALTITUDE = 50;
+    private final static int LAND_ALTITUDE = 100;
     
     @Override
     public Point[][] generate(Point[][] map) {
