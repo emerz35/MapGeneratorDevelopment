@@ -2,15 +2,12 @@ package gui;
 
 import generation.MapGenerator;
 import generation.altitudegenerators.PerlinNoiseAltitudeGenerator;
-import generation.imagegenerators.MonochromeImageGenerator;
+import generation.imagegenerators.BiomeDependantImageGenerator;
+import generation.landgenerators.LandFromAltitudeGenerator;
 import generation.mapgenerators.DefaultMapGenerator;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
 import main.Main;
 import map.Map;
 
@@ -21,9 +18,9 @@ import map.Map;
  */
 public class Renderer implements Runnable{
     
-    private MapGenerator generator;
+    private final MapGenerator generator;
     private Map map;
-    private Main main;
+    private final Main main;
     private static final long DELAY = 1000L/60L;
     private long now;
     
@@ -40,7 +37,7 @@ public class Renderer implements Runnable{
      */
     public Renderer(Main m){
         main = m;
-        generator = new DefaultMapGenerator(null, new PerlinNoiseAltitudeGenerator(),null,null,null,null,new MonochromeImageGenerator());
+        generator = new DefaultMapGenerator(null, new PerlinNoiseAltitudeGenerator(),null,null,null,new LandFromAltitudeGenerator(),new BiomeDependantImageGenerator());
         map = generator.generateMap();
         handler = new GUIHandler(map);
         testSlider = new GUISlider(50,500,0,50,10,50,true);
