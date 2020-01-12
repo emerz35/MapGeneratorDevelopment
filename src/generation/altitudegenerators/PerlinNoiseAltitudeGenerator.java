@@ -19,14 +19,17 @@ public class PerlinNoiseAltitudeGenerator implements AltitudeGenerator{
             double j = Utils.R.nextDouble();
             Gs[i] = new double[]{Math.cos(2*Math.PI*j),Math.sin(2*Math.PI*j)};
         }
+    }
+    
+    private static void generatePs(){
         for(int i = 0;i<Ps.length;i++){
             Ps[i] = Utils.R.nextInt(1000);
         }
     }
     
-    
     @Override
     public Point[][] generate(Point[][] map) {
+        generatePs();
         for(int y = 0;y<map.length;y++){
             for(int x = 0; x<map[y].length;x++){
                 map[y][x].altitude = getAltitudeAt(x,y,OCTAVES);
