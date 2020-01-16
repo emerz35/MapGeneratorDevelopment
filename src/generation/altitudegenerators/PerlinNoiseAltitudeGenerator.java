@@ -11,7 +11,7 @@ import map.Point;
 public class PerlinNoiseAltitudeGenerator implements AltitudeGenerator{
     
     private final static double[][] OCTAVES = {{0.6,100},{0.1,250},{0.3,150}};
-    private final static int MAX_ALTITUDE = 255,MIN_ALTITUDE = 0;
+    private final static int MAX_ALTITUDE = 1000,MIN_ALTITUDE = -100;
     private final static double[][] Gs = new double[20][2];
     private final static int[] Ps = new int[2000]; 
     static{
