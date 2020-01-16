@@ -2,7 +2,7 @@ package gui;
 
 import generation.MapGenerator;
 import generation.altitudegenerators.PerlinNoiseAltitudeGenerator;
-import generation.imagegenerators.MonochromeImageGenerator;
+import generation.imagegenerators.BiomeDependantImageGenerator;
 import generation.landgenerators.LandFromAltitudeGenerator;
 import generation.mapgenerators.DefaultMapGenerator;
 import java.awt.Color;
@@ -37,10 +37,11 @@ public class Renderer implements Runnable{
      */
     public Renderer(Main m){
         main = m;
-        generator = new DefaultMapGenerator(null, new PerlinNoiseAltitudeGenerator(),null,null,null,new LandFromAltitudeGenerator(),new MonochromeImageGenerator());
+        testSlider = new GUISlider(50,500,300,700,50,50,false);
+        generator = new DefaultMapGenerator(null, new PerlinNoiseAltitudeGenerator(),null,null,null,new LandFromAltitudeGenerator(testSlider),new BiomeDependantImageGenerator());
         map = generator.generateMap();
         handler = new GUIHandler(map);
-        testSlider = new GUISlider(50,500,0,50,10,50,true);
+        
         handler.sliders.add(testSlider);
         generateBtn = new GUIButton(()-> {generateMap();System.out.println("New Map Generated");}, 50,530,50,25);
         handler.btns.add(generateBtn);
