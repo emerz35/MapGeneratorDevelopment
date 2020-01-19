@@ -1,7 +1,7 @@
 package gui;
 
 import generation.MapGenerator;
-import generation.altitudegenerators.PerlinNoiseAltitudeGenerator;
+import generation.altitudegenerators.VolcanoAltitudeGenerator;
 import generation.imagegenerators.BiomeDependantImageGenerator;
 import generation.landgenerators.LandFromAltitudeGenerator;
 import generation.mapgenerators.DefaultMapGenerator;
@@ -38,7 +38,7 @@ public class Renderer implements Runnable{
     public Renderer(Main m){
         main = m;
         testSlider = new GUISlider(50,500,300,700,50,50,false);
-        generator = new DefaultMapGenerator(null, new PerlinNoiseAltitudeGenerator(),null,null,null,new LandFromAltitudeGenerator(testSlider),new BiomeDependantImageGenerator());
+        generator = new DefaultMapGenerator(null, new VolcanoAltitudeGenerator(),null,null,null,new LandFromAltitudeGenerator(testSlider),new BiomeDependantImageGenerator());
         map = generator.generateMap();
         handler = new GUIHandler(map);
         

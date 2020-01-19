@@ -10,7 +10,7 @@ import main.Main;
 
 public class Map {
     
-    private static final double MAX_ZOOM = 32, MIN_ZOOM = 1;
+    private static final double MAX_ZOOM = 32, MIN_ZOOM = 0.25;
     public static final int TOP_LEFT_X = Main.M_WIDTH/4, TOP_LEFT_Y = 0, AREA_WIDTH = 3*Main.M_WIDTH/4, AREA_HEIGHT = Main.M_HEIGHT;
 
     private final BufferedImage image;
@@ -46,8 +46,8 @@ public class Map {
      * @param my 
      */
     public void zoom(int change, int mx, int my){
-        double zoomChange = Math.pow(2, change);
-        zoom*=zoomChange;
+       zoom*= Math.pow(2, change);
+        
         if(zoom>MAX_ZOOM)zoom = MAX_ZOOM;
         else if(zoom<MIN_ZOOM) zoom = MIN_ZOOM;
         else{
