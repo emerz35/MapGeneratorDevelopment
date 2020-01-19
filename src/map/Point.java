@@ -4,7 +4,9 @@ public class Point {
 
     public final int x, y;
 
-    public int centroidNum = 0,altitude = 0;
+    public int altitude = 0;
+    
+    public Centroid centroid;
     
     public Biome biome = Biome.SEA;
     
