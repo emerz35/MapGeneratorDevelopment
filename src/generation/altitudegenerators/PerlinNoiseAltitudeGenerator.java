@@ -10,8 +10,8 @@ import map.Point;
  */
 public class PerlinNoiseAltitudeGenerator implements AltitudeGenerator{
     
-    private final static double[][] OCTAVES = {{0.6,100},{0.1,250},{0.3,150}};
-    private final static int MAX_ALTITUDE = 1000,MIN_ALTITUDE = -100;
+    private final static double[][] OCTAVES = {{0.5,100},{0.2,300},{0.3,150}};
+    private final static int MAX_ALTITUDE = 500,MIN_ALTITUDE = -100;
     private final static double[][] Gs = new double[20][2];
     private final static int[] Ps = new int[2000]; 
     static{
@@ -32,7 +32,7 @@ public class PerlinNoiseAltitudeGenerator implements AltitudeGenerator{
         generatePs();
         for(int y = 0;y<map.length;y++){
             for(int x = 0; x<map[y].length;x++){
-                map[y][x].altitude = getAltitudeAt(x,y,OCTAVES);
+                map[y][x].altitude += getAltitudeAt(x,y,OCTAVES);
             }
         }
         return map;
@@ -45,7 +45,7 @@ public class PerlinNoiseAltitudeGenerator implements AltitudeGenerator{
      * @param octaves Array of arrays relating to the different 'octaves' used when generating altitude. These will be different times the algorithm is run. First num is max amplitude percentage, second is spacing
      * @return 
      */
-    private int getAltitudeAt(double x, double y, double[]... octaves){
+    public int getAltitudeAt(double x, double y, double[]... octaves){
         double relativeAlti = 0;
         for(double[] o:octaves){
             relativeAlti += o[0]* perlinNoiseAt(x,y,o[1]);
