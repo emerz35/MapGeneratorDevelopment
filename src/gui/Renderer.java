@@ -1,9 +1,9 @@
 package gui;
 
 import generation.MapGenerator;
-import generation.altitudegenerators.VolcanoAltitudeGenerator;
+import generation.altitudegenerators.VoronoiPerlinAltitudeGenerator;
 import generation.imagegenerators.BiomeDependantImageGenerator;
-import generation.landgenerators.LandFromAltitudeGenerator;
+import generation.landgenerators.SmoothedAltitudeDependantLandGenerator;
 import generation.mapgenerators.DefaultMapGenerator;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -37,8 +37,8 @@ public class Renderer implements Runnable{
      */
     public Renderer(Main m){
         main = m;
-        testSlider = new GUISlider(50,500,300,700,50,50,false);
-        generator = new DefaultMapGenerator(null, new VolcanoAltitudeGenerator(),null,null,null,new LandFromAltitudeGenerator(testSlider),new BiomeDependantImageGenerator());
+        testSlider = new GUISlider(50,500,100,500,50,50,false);
+        generator = new DefaultMapGenerator(null, new VoronoiPerlinAltitudeGenerator(),null,null,null,new SmoothedAltitudeDependantLandGenerator(testSlider),new BiomeDependantImageGenerator());
         map = generator.generateMap();
         handler = new GUIHandler(map);
         
