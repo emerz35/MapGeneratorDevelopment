@@ -2,6 +2,7 @@ package generation.landgenerators;
 
 import generation.LandGenerator;
 import gui.GUISlider;
+import main.Utils;
 import map.Biome;
 import map.Point;
 
@@ -32,11 +33,10 @@ public class SmoothedAltitudeDependantLandGenerator implements LandGenerator{
         
         boolean flag = true;
         while(flag){
-            
             flag = false;
             for(int y = 0; y < map.length;y++){
                 for(int x = 0; x < map.length;x++){
-                    if(map[y][x].biome == Biome.SEA && isLandlocked(map,x,y)){map[y][x].biome = Biome.COAST;flag = true;}
+                    if(map[y][x].biome == Biome.SEA && isLandlocked(map,x,y)){map[y][x].biome = Biome.LAND;flag = true;}
                     else if(map[y][x].isLand() && isSealocked(map,x,y)){map[y][x].biome = Biome.SEA;flag = true;}
                 }
             }
@@ -55,6 +55,7 @@ public class SmoothedAltitudeDependantLandGenerator implements LandGenerator{
             }
         }
         return count>4;
+        
     }
     
     //checks if a certain point is surrounded by surrounded by at least 5 bits of sea. Sets pixel to coast if it is adjacent to
@@ -65,12 +66,13 @@ public class SmoothedAltitudeDependantLandGenerator implements LandGenerator{
             for(int j = -1;j<2;j++){
                 int nx = x+j,ny = y+i;
                 if((i==0 && j==0) ||nx<0||ny<0||nx>=map[0].length||ny>=map.length);
-                else if(map[ny][nx].biome == Biome.SEA)count++;
+                else if(map[ny][nx].biome == Biome.SEA){
+                    count++;
+                    if(map[ny][nx].isLand())map[ny][nx].biome = Biome.COAST;
+                }
                 
             }
         }
         return count>4;
     }
-    
-    
 }

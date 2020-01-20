@@ -15,7 +15,7 @@ public class VoronoiPerlinAltitudeGenerator implements AltitudeGenerator{
 
     private final PerlinNoiseAltitudeGenerator perlin = new PerlinNoiseAltitudeGenerator();
     
-    private static final int POLYGON_NUM = 1000, ITERATIONS = 4;
+    private static final int POLYGON_NUM = 2000, ITERATIONS = 4;
     
     private int centroidArea = 0;
     
@@ -29,14 +29,10 @@ public class VoronoiPerlinAltitudeGenerator implements AltitudeGenerator{
             centroids.add(new Centroid(Utils.R.nextInt(map[0].length),Utils.R.nextInt(map.length),i));
         }
         
-        for(Centroid c: centroids){
-            generatePolygon(c,map);
-        }
+        centroids.forEach((c) -> generatePolygon(c,map));
         for(int i = 1; i<ITERATIONS; i++){
             setCentroidPositions(map,centroids);
-            for(Centroid c: centroids){
-                generatePolygon(c,map);
-            }
+            centroids.forEach((c) -> generatePolygon(c,map));
         }
         PerlinNoiseAltitudeGenerator.generatePs();
         centroids.forEach(c-> c.altitude = perlin.getAltitudeAt(c.x, c.y, perlin.OCTAVES));
