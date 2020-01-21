@@ -33,7 +33,7 @@ public class DefaultMapGenerator extends MapGenerator{
                 map[y][x] = new Point(x,y);
             }
         }
-        
+       
         map = landGen.generate(altiGen.generate(map));
         return new Map(imageGen.generateImage(map));
     }

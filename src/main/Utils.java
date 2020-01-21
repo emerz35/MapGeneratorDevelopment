@@ -23,6 +23,7 @@ public class Utils {
      * @return 
      */
     public static double kernel(double x, double s){
-        return 1/(1+x/(s*s));
+        //return 1/(1+x/(s*s));
+        return Math.exp(-x/(s*s));
     }
 }
