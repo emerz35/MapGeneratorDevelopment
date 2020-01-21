@@ -2,7 +2,6 @@ package generation.landgenerators;
 
 import generation.LandGenerator;
 import gui.GUISlider;
-import main.Utils;
 import map.Biome;
 import map.Point;
 
@@ -44,7 +43,7 @@ public class SmoothedAltitudeDependantLandGenerator implements LandGenerator{
         return map;
     }
     
-    //checks if a certain point is surrounded by at least 5 bits of land
+    //checks if a certain point is surrounded by at least 6 bits of land
     private boolean isLandlocked(Point[][] map,int x, int y){
         int count = 0;
         for(int i = -1; i < 2;i++){
@@ -54,12 +53,11 @@ public class SmoothedAltitudeDependantLandGenerator implements LandGenerator{
                 else if(map[ny][nx].isLand())count++;
             }
         }
-        return count>4;
+        return count>5;
         
     }
     
-    //checks if a certain point is surrounded by surrounded by at least 5 bits of sea. Sets pixel to coast if it is adjacent to
-    //at least one sea
+    //checks if a certain point is surrounded by surrounded by at least 6 bits of sea.
     private boolean isSealocked(Point[][] map, int x,int y){
         int count = 0;
         for(int i = -1; i < 2;i++){
@@ -68,11 +66,10 @@ public class SmoothedAltitudeDependantLandGenerator implements LandGenerator{
                 if((i==0 && j==0) ||nx<0||ny<0||nx>=map[0].length||ny>=map.length);
                 else if(map[ny][nx].biome == Biome.SEA){
                     count++;
-                    if(map[ny][nx].isLand())map[ny][nx].biome = Biome.COAST;
                 }
                 
             }
         }
-        return count>4;
+        return count>5;
     }
 }
