@@ -6,11 +6,23 @@ public class Utils {
 
     public static Random R = new Random();
 
-    public int distanceSquared(int x1, int y1, int x2, int y2) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    /**
+     * 
+     * @param start
+     * @param end
+     * @return 
+     */
+    public static int randInt(int start, int end) {
+        return start + R.nextInt(end-start);
     }
-
-    public int randInt(int start, int end) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    
+    /**
+     * 
+     * @param x
+     * @param s
+     * @return 
+     */
+    public static double kernel(double x, double s){
+        return 1/(1+x/(s*s));
     }
 }

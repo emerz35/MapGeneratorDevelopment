@@ -1,11 +1,11 @@
 package generation.altitudegenerators;
 
 import generation.AltitudeGenerator;
+import gui.GUISlider;
 import java.util.LinkedList;
 import map.Centroid;
 import map.Point;
 import main.Utils;
-import map.Biome;
 
 /**
  *
@@ -19,6 +19,12 @@ public class VoronoiPerlinAltitudeGenerator implements AltitudeGenerator{
     
     private int centroidArea = 0;
     
+    private GUISlider sSlider;
+    
+    public VoronoiPerlinAltitudeGenerator(GUISlider s){
+        sSlider = s;
+    }
+    
     @Override
     public Point[][] generate(Point[][] map) {
         centroidArea=(int)((double)(map[0].length*map.length)/(double)POLYGON_NUM);
@@ -26,7 +32,7 @@ public class VoronoiPerlinAltitudeGenerator implements AltitudeGenerator{
         LinkedList<Centroid> centroids = new LinkedList<>();
         
         for(int i = 0; i < POLYGON_NUM; i++){
-            centroids.add(new Centroid(Utils.R.nextInt(map[0].length),Utils.R.nextInt(map.length),i));
+            centroids.add(new Centroid(Utils.randInt((int)((double)map[0].length/8d), (int)(7d*(double)map[0].length/8d)),Utils.randInt((int)((double)map.length/8d), (int)(7d*(double)map.length/8d)),i));
         }
         
         centroids.forEach((c) -> generatePolygon(c,map));
@@ -35,7 +41,8 @@ public class VoronoiPerlinAltitudeGenerator implements AltitudeGenerator{
             centroids.forEach((c) -> generatePolygon(c,map));
         }
         PerlinNoiseAltitudeGenerator.generatePs();
-        centroids.forEach(c-> c.altitude = perlin.getAltitudeAt(c.x, c.y, perlin.OCTAVES));
+        double s = sSlider.getNum();
+        centroids.forEach(c-> c.altitude = (int)((double)perlin.getAltitudeAt(c.x, c.y, perlin.OCTAVES)*Utils.kernel((c.x-(double)map[0].length/2d)*(c.x-(double)map[0].length/2d)+(c.y-(double)map.length/2d)*(c.y-(double)map.length/2d),s)));
         
         for(int y = 0;y < map.length;y++){
             for(int x = 0; x < map[y].length;x++){

@@ -27,7 +27,7 @@ public class Renderer implements Runnable{
     public GUIHandler handler;
     
     GUIButton generateBtn; 
-    GUISlider testSlider; 
+    GUISlider testSlider, landSlider; 
     
     boolean running = true;
     
@@ -37,11 +37,12 @@ public class Renderer implements Runnable{
      */
     public Renderer(Main m){
         main = m;
-        testSlider = new GUISlider(50,500,100,500,50,50,false);
-        generator = new DefaultMapGenerator(null, new VoronoiPerlinAltitudeGenerator(),null,null,null,new SmoothedAltitudeDependantLandGenerator(testSlider),new BiomeDependantImageGenerator());
+        testSlider = new GUISlider(50,500,150,250,10,50,false);
+        landSlider = new GUISlider(50,200,500,1500,50,50,false);
+        generator = new DefaultMapGenerator(null, new VoronoiPerlinAltitudeGenerator(landSlider),null,null,null,new SmoothedAltitudeDependantLandGenerator(testSlider),new BiomeDependantImageGenerator());
         map = generator.generateMap();
         handler = new GUIHandler(map);
-        
+        handler.sliders.add(landSlider);
         handler.sliders.add(testSlider);
         generateBtn = new GUIButton(()-> {generateMap();System.out.println("New Map Generated");}, 50,530,50,25);
         handler.btns.add(generateBtn);
@@ -59,7 +60,7 @@ public class Renderer implements Runnable{
         map.renderImage(g);
         g.setColor(Color.GRAY);
         g.fill3DRect(0, 0, Main.M_WIDTH/4, Main.M_HEIGHT, true);
-        
+        landSlider.paint(g);
         testSlider.paint(g);
         generateBtn.paint(g);
         //Displays the graphics to the window
