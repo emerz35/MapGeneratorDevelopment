@@ -38,7 +38,7 @@ public class Renderer implements Runnable{
     public Renderer(Main m){
         main = m;
         testSlider = new GUISlider(50,500,150,250,10,50,false);
-        landSlider = new GUISlider(50,200,500,1500,50,50,false);
+        landSlider = new GUISlider(50,200,100,600,50,50,false);
         generator = new DefaultMapGenerator(null, new VoronoiPerlinAltitudeGenerator(landSlider),null,null,null,new SmoothedAltitudeDependantLandGenerator(testSlider),new BiomeDependantImageGenerator());
         map = generator.generateMap();
         handler = new GUIHandler(map);
