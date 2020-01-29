@@ -5,13 +5,12 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.LinkedList;
 import javax.imageio.ImageIO;
 import main.Main;
 
 public class Map {
     
-    public static LinkedList<Centroid> centroids = null;
+    public static Centroid[] centroids = null;
     
     private static final double MAX_ZOOM = 32, MIN_ZOOM = 0.25;
     public static final int TOP_LEFT_X = Main.M_WIDTH/4, TOP_LEFT_Y = 0, AREA_WIDTH = 3*Main.M_WIDTH/4, AREA_HEIGHT = Main.M_HEIGHT;

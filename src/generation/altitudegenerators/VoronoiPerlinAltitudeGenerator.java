@@ -32,19 +32,19 @@ public class VoronoiPerlinAltitudeGenerator implements AltitudeGenerator{
         //Calculates the average area of a voronoi polygon with the number of centroids
         centroidArea=(int)((double)(map[0].length*map.length)/((double)POLYGON_NUM));
         
-        LinkedList<Centroid> centroids = new LinkedList<>();
+        Centroid[] centroids = new Centroid[POLYGON_NUM];
         
         //Initialises the centroids and generates a polygon for each of them
         for(int i = 0; i < POLYGON_NUM; i++){
             Centroid c = new Centroid(Utils.randInt(0, map[0].length),Utils.randInt(0, map.length),i);
             generatePolygon(c,map);
-            centroids.add(c);
+            centroids[i] = c;
         }
         
         //relaxes, then generates another polygon for each centroid
         for(int i = 1; i<ITERATIONS; i++){
             centroids = setCentroidPositions(map,centroids);
-            centroids.forEach((c) -> generatePolygon(c,map));
+            for(Centroid c:centroids)generatePolygon(c,map);
         }
         PerlinNoiseAltitudeGenerator.generatePs();
         double s = sSlider.getNum();
@@ -54,10 +54,11 @@ public class VoronoiPerlinAltitudeGenerator implements AltitudeGenerator{
         for(int i = 0;i<landMassSlider.getNum();i++)
             landMasses.add(new Centroid(Utils.randInt((int)((double)map[0].length/4d), (int)(3d*(double)map[0].length/4d)),Utils.randInt((int)((double)map.length/4d), (int)(3d*(double)map.length/4d)),0));
         
-        centroids.forEach(c-> {
+        
+        for(Centroid c:centroids){
             Centroid closest = getClosestCentroid(landMasses,c.x,c.y);
             c.altitude = (int)((double)perlin.getAltitudeAt(c.x, c.y, perlin.OCTAVES)*Utils.kernel((c.x-closest.x)*(c.x-closest.x)+(c.y-closest.y)*(c.y-closest.y),s));
-                    });
+        }
         
         Map.centroids = centroids;
         
@@ -124,9 +125,9 @@ public class VoronoiPerlinAltitudeGenerator implements AltitudeGenerator{
      * @param centroids
      * @return The list of centroids that have been relaxed
      */
-    private LinkedList<Centroid> setCentroidPositions(Point[][] map, LinkedList<Centroid> centroids){
+    private Centroid[] setCentroidPositions(Point[][] map, Centroid[] centroids){
       
-        double[] sum = new double[centroids.size()], xsum = new double[centroids.size()], ysum = new double[centroids.size()];
+        double[] sum = new double[centroids.length], xsum = new double[centroids.length], ysum = new double[centroids.length];
         for(Point[] column:map){
             for(Point p:column){
                 sum[p.centroid.num]++;
@@ -134,10 +135,10 @@ public class VoronoiPerlinAltitudeGenerator implements AltitudeGenerator{
                 ysum[p.centroid.num]+=p.y;
             }
         }
-        centroids.forEach(c->{
+        for(Centroid c:centroids){
             c.x = (int)(xsum[c.num]/sum[c.num]);
             c.y = (int)(ysum[c.num]/sum[c.num]);
-        });
+        }
         return centroids;
     }
     
