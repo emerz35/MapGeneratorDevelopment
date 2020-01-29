@@ -5,6 +5,7 @@ import generation.altitudegenerators.VoronoiPerlinAltitudeGenerator;
 import generation.imagegenerators.BiomeDependantImageGenerator;
 import generation.landgenerators.SmoothedAltitudeDependantLandGenerator;
 import generation.mapgenerators.DefaultMapGenerator;
+import generation.rivergenerators.VoronoiRiverGenerator;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
@@ -27,7 +28,7 @@ public class Renderer implements Runnable{
     public GUIHandler handler;
     
     GUIButton generateBtn; 
-    GUISlider testSlider, landSlider; 
+    GUISlider testSlider, landSlider, landMassSlider; 
     
     boolean running = true;
     
@@ -38,12 +39,15 @@ public class Renderer implements Runnable{
     public Renderer(Main m){
         main = m;
         testSlider = new GUISlider(50,500,150,250,10,50,false);
-        landSlider = new GUISlider(50,200,100,600,50,50,false);
-        generator = new DefaultMapGenerator(null, new VoronoiPerlinAltitudeGenerator(landSlider),null,null,null,new SmoothedAltitudeDependantLandGenerator(testSlider),new BiomeDependantImageGenerator());
+        landSlider = new GUISlider(50,200,200,600,50,50,false);
+        landMassSlider = new GUISlider(50, 300, 1, 5,1,50,true);
+        
+        generator = new DefaultMapGenerator(null, new VoronoiPerlinAltitudeGenerator(landSlider, landMassSlider),null,new VoronoiRiverGenerator(testSlider),null,new SmoothedAltitudeDependantLandGenerator(testSlider),new BiomeDependantImageGenerator());
         map = generator.generateMap();
         handler = new GUIHandler(map);
         handler.sliders.add(landSlider);
         handler.sliders.add(testSlider);
+        handler.sliders.add(landMassSlider);
         generateBtn = new GUIButton(()-> {generateMap();System.out.println("New Map Generated");}, 50,530,50,25);
         handler.btns.add(generateBtn);
     }
@@ -60,6 +64,7 @@ public class Renderer implements Runnable{
         map.renderImage(g);
         g.setColor(Color.GRAY);
         g.fill3DRect(0, 0, Main.M_WIDTH/4, Main.M_HEIGHT, true);
+        landMassSlider.paint(g);
         landSlider.paint(g);
         testSlider.paint(g);
         generateBtn.paint(g);

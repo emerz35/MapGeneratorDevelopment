@@ -23,7 +23,8 @@ public class LandFromAltitudeGenerator implements LandGenerator{
         for(int y = 0;y<map.length;y++){
             for(int x = 0; x<map[y].length;x++){
                 if(map[y][x].altitude>landAltitude){
-                    map[y][x].biome = Biome.LAND;
+                    if(map[y][x].altitude>(double)landAltitude*1.5d) map[y][x].biome = Biome.MOUNTAIN;
+                    else map[y][x].biome = Biome.LAND;
                 }
             }
         }

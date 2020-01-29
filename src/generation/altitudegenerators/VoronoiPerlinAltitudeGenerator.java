@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import map.Centroid;
 import map.Point;
 import main.Utils;
+import map.Map;
 
 /**
  *
@@ -15,14 +16,15 @@ public class VoronoiPerlinAltitudeGenerator implements AltitudeGenerator{
 
     private final PerlinNoiseAltitudeGenerator perlin = new PerlinNoiseAltitudeGenerator();
     
-    private static final int POLYGON_NUM = 2000, ITERATIONS = 2, LAND_MASS_NUM = 7;
+    private static final int POLYGON_NUM = 8000, ITERATIONS = 2;
     
     private int centroidArea = 0;
     
-    private final GUISlider sSlider;
+    private final GUISlider sSlider, landMassSlider;
     
-    public VoronoiPerlinAltitudeGenerator(GUISlider s){
+    public VoronoiPerlinAltitudeGenerator(GUISlider s, GUISlider landMass){
         sSlider = s;
+        landMassSlider = landMass;
     }
     
     @Override
@@ -40,30 +42,30 @@ public class VoronoiPerlinAltitudeGenerator implements AltitudeGenerator{
         }
         
         //relaxes, then generates another polygon for each centroid
-        /*for(int i = 1; i<ITERATIONS; i++){
+        for(int i = 1; i<ITERATIONS; i++){
             centroids = setCentroidPositions(map,centroids);
             centroids.forEach((c) -> generatePolygon(c,map));
-        }*/
+        }
         PerlinNoiseAltitudeGenerator.generatePs();
         double s = sSlider.getNum();
         
         LinkedList<Centroid> landMasses = new LinkedList<>();
         
-        for(int i = 0;i<LAND_MASS_NUM;i++)
+        for(int i = 0;i<landMassSlider.getNum();i++)
             landMasses.add(new Centroid(Utils.randInt((int)((double)map[0].length/4d), (int)(3d*(double)map[0].length/4d)),Utils.randInt((int)((double)map.length/4d), (int)(3d*(double)map.length/4d)),0));
         
         centroids.forEach(c-> {
-            
             Centroid closest = getClosestCentroid(landMasses,c.x,c.y);
             c.altitude = (int)((double)perlin.getAltitudeAt(c.x, c.y, perlin.OCTAVES)*Utils.kernel((c.x-closest.x)*(c.x-closest.x)+(c.y-closest.y)*(c.y-closest.y),s));
                     });
+        
+        Map.centroids = centroids;
         
         for (Point[] map1 : map) {
             for (Point map11 : map1) {
                 map11.altitude = map11.centroid.altitude;
             }
         }
-       
         return map;
     }
     
@@ -112,6 +114,7 @@ public class VoronoiPerlinAltitudeGenerator implements AltitudeGenerator{
         if(x>=map[y].length||x<0)return false;
         Point p = map[y][x];
         if(p.centroid == null)return true;
+        //c.adjacent.add(p.centroid);
         return p.distanceSquaredTo(p.centroid.x,p.centroid.y)>p.distanceSquaredTo(c.x,c.y)&&Math.abs(p.x-c.x)*Math.abs(p.y-c.y)<centroidArea;
     }
     
