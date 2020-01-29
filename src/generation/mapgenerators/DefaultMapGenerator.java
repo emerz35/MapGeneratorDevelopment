@@ -35,6 +35,9 @@ public class DefaultMapGenerator extends MapGenerator{
         }
        
         map = landGen.generate(altiGen.generate(map));
+        
+        map = rivGen.generate(map);
+                
         return new Map(imageGen.generateImage(map));
     }
     
