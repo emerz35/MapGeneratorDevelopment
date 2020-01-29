@@ -34,9 +34,10 @@ public class DefaultMapGenerator extends MapGenerator{
             }
         }
        
+        long start = System.currentTimeMillis();
         map = landGen.generate(altiGen.generate(map));
-        
-        map = rivGen.generate(map);
+        System.out.println(System.currentTimeMillis()-start);
+        //map = rivGen.generate(map);
                 
         return new Map(imageGen.generateImage(map));
     }

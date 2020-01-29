@@ -2,6 +2,7 @@ package generation.altitudegenerators;
 
 import generation.AltitudeGenerator;
 import gui.GUISlider;
+import java.util.Arrays;
 import java.util.LinkedList;
 import map.Centroid;
 import map.Point;
@@ -49,10 +50,10 @@ public class VoronoiPerlinAltitudeGenerator implements AltitudeGenerator{
         PerlinNoiseAltitudeGenerator.generatePs();
         double s = sSlider.getNum();
         
-        LinkedList<Centroid> landMasses = new LinkedList<>();
+        Centroid[] landMasses = new Centroid[(int)landMassSlider.getNum()];
         
         for(int i = 0;i<landMassSlider.getNum();i++)
-            landMasses.add(new Centroid(Utils.randInt((int)((double)map[0].length/4d), (int)(3d*(double)map[0].length/4d)),Utils.randInt((int)((double)map.length/4d), (int)(3d*(double)map.length/4d)),0));
+            landMasses[i] = new Centroid(Utils.randInt((int)((double)map[0].length/4d), (int)(3d*(double)map[0].length/4d)),Utils.randInt((int)((double)map.length/4d), (int)(3d*(double)map.length/4d)),0);
         
         
         for(Centroid c:centroids){
@@ -149,7 +150,11 @@ public class VoronoiPerlinAltitudeGenerator implements AltitudeGenerator{
      * @param y
      * @return 
      */
-    private Centroid getClosestCentroid(LinkedList<Centroid> cs, int x, int y){
-        return cs.stream().min((c1,c2)-> (c1.x-x)*(c1.x-x)+(c1.y-y)*(c1.y-y)-(c2.x-x)*(c2.x-x)-(c2.y-y)*(c2.y-y)).get();
+    private Centroid getClosestCentroid(Centroid[] cs, int x, int y){
+        Centroid c2 = cs[0];
+        for(Centroid c1:cs){
+            if((c1.x-x)*(c1.x-x)+(c1.y-y)*(c1.y-y)<(c2.x-x)*(c2.x-x)-(c2.y-y)*(c2.y-y))c2 = c1;
+        }
+        return c2;
     }
 }
