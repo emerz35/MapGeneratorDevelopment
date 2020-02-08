@@ -31,6 +31,7 @@ public class Main extends Canvas{
         this.addMouseMotionListener(renderer.handler);
         this.addMouseWheelListener(renderer.handler);
         renderThread = new Thread(renderer);
+        renderThread.setName("RenderThread");
         renderThread.setDaemon(true);
         renderThread.start();
     }

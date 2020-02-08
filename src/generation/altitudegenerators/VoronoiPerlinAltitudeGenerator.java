@@ -2,7 +2,6 @@ package generation.altitudegenerators;
 
 import generation.AltitudeGenerator;
 import gui.GUISlider;
-import java.util.Arrays;
 import java.util.LinkedList;
 import map.Centroid;
 import map.Point;
@@ -17,7 +16,7 @@ public class VoronoiPerlinAltitudeGenerator implements AltitudeGenerator{
 
     private final PerlinNoiseAltitudeGenerator perlin = new PerlinNoiseAltitudeGenerator();
     
-    private static final int POLYGON_NUM = 8000, ITERATIONS = 2;
+    private static final int POLYGON_NUM = 10000, ITERATIONS = 2;
     
     private int centroidArea = 0;
     
@@ -66,9 +65,22 @@ public class VoronoiPerlinAltitudeGenerator implements AltitudeGenerator{
         for (Point[] map1 : map) {
             for (Point map11 : map1) {
                 map11.altitude = map11.centroid.altitude;
+                setNeighbours(map11,map);
             }
         }
+        
+        
         return map;
+    }
+    
+    private void setNeighbours(Point p, Point[][] map){
+        for(int i = -1;i<2;i++){
+            for(int j = -1;j<2;j++){
+                if(j!=0 && i!=0 && p.x+j>=0&&p.x+j<map[0].length&&p.y+i>=0&&p.y+i<map.length){
+                    if(!map[p.y+i][p.x+j].centroid.equals(p.centroid))p.centroid.adjacent.add(map[p.y+i][p.x+j].centroid);
+                }
+            }
+        }
     }
     
     /**

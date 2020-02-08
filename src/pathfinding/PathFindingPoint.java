@@ -7,7 +7,8 @@ import map.Point;
  * @author Charlie
  */
 public class PathFindingPoint {
-    public double cost = 99999999;
+    public int cost=-1;
+    public boolean visited=false;
 
     public final Point point;
     public PathFindingPoint from;
