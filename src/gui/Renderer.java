@@ -48,7 +48,7 @@ public class Renderer implements Runnable{
         handler.sliders.add(landSlider);
         handler.sliders.add(testSlider);
         handler.sliders.add(landMassSlider);
-        generateBtn = new GUIButton(()-> {generateMap();System.out.println("New Map Generated");}, 50,530,50,25);
+        generateBtn = new GUIButton(()-> generateMap(), 50,530,50,25);
         handler.btns.add(generateBtn);
     }
     
@@ -101,6 +101,7 @@ public class Renderer implements Runnable{
     private void generateMap(){
         map = generator.generateMap();
         handler.changeMap(map);
+        System.out.println("New Map Generated");
     }
     
     /**

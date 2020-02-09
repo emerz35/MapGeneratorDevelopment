@@ -19,11 +19,11 @@ import pathfinding.PathFinder;
 public class VoronoiRiverGenerator implements RiverGenerator{
     
     
-    private final PathFinder riverFinder = new PathFinder(new Heuristic(0.00001,PathFinder.euclideanDistance), /*new Heuristic(10,(a,b)->(double)Utils.randInt(0,100)),*/new Heuristic(5,(a,b)->(double)a.altitude));
+    private final PathFinder riverFinder = new PathFinder(new Heuristic(0.00001,PathFinder.euclideanDistance), new Heuristic(3,(a,b)->(double)Utils.randInt(0,100)),new Heuristic(20,(a,b)->(double)a.altitude));
     
     private final GUISlider minAltitude;
     
-    private static final double ALTITUDE_CONSTANT = 1.2;
+    private static final double ALTITUDE_CONSTANT = 1.1;
     
     public VoronoiRiverGenerator(GUISlider s){
         minAltitude = s;
@@ -32,7 +32,7 @@ public class VoronoiRiverGenerator implements RiverGenerator{
     @Override
     public Point[][] generate(Point[][] map) {
         Centroid start = Map.centroids[Utils.randInt(0,Map.centroids.length)];
-        while(start.altitude<minAltitude.getNum()) start = Map.centroids[Utils.randInt(0,Map.centroids.length)];
+        while(start.altitude<minAltitude.getNum()*ALTITUDE_CONSTANT) start = Map.centroids[Utils.randInt(0,Map.centroids.length)];
         //Point start = map[1000][1000];
         try{
             Point sea = findSea(start,map);
