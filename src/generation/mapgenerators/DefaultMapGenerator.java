@@ -17,7 +17,7 @@ import map.Point;
  */
 public class DefaultMapGenerator extends MapGenerator{
     
-    private final static int MAP_WIDTH = 4*800, MAP_HEIGHT = 4*600;
+    private final static int MAP_WIDTH = 2400, MAP_HEIGHT = 1600;
     
 
     public DefaultMapGenerator(BiomeGenerator b, AltitudeGenerator a, CountryGenerator c, RiverGenerator r, RoadGenerator rd, LandGenerator l, ImageGenerator i) {

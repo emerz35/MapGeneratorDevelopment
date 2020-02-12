@@ -79,7 +79,6 @@ public class PathFinder {
         PathFindingPoint[][] pathMap = new PathFindingPoint[map.length][map[0].length]; 
         
         pathMap[start.y][start.x] = point;
-        System.out.println("Finding path...");
         toVisit.add(point);
         PathFindingPoint temp;
         int ny,nx;
@@ -115,8 +114,6 @@ public class PathFinder {
                 }
             }
         }
-        
-        System.out.println("Path Found");
         LinkedList<Point> path = new LinkedList<>();
         
         while(point.from!=null){

@@ -16,7 +16,7 @@ public class VoronoiPerlinAltitudeGenerator implements AltitudeGenerator{
 
     private final PerlinNoiseAltitudeGenerator perlin = new PerlinNoiseAltitudeGenerator();
     
-    private static final int POLYGON_NUM = 10000, ITERATIONS = 2;
+    private static final int POLYGON_NUM = 8000, ITERATIONS = 2;
     
     private int centroidArea = 0;
     
