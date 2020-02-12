@@ -12,7 +12,7 @@ public class Map {
     
     public static Centroid[] centroids = null;
     
-    private static final double MAX_ZOOM = 32, MIN_ZOOM = 0.25;
+    private final double MAX_ZOOM, MIN_ZOOM;
     public static final int TOP_LEFT_X = Main.M_WIDTH/4, TOP_LEFT_Y = 0, AREA_WIDTH = 3*Main.M_WIDTH/4, AREA_HEIGHT = Main.M_HEIGHT;
 
     private final BufferedImage image;
@@ -22,6 +22,8 @@ public class Map {
     
     public Map(BufferedImage image){
         this.image = image;
+        MIN_ZOOM = Math.max((double)AREA_HEIGHT/(double)image.getHeight(), (double)AREA_WIDTH/(double)image.getWidth());
+        MAX_ZOOM = MIN_ZOOM*128;
     }
     
     /**

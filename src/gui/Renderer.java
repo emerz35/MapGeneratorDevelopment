@@ -28,7 +28,7 @@ public class Renderer implements Runnable{
     public GUIHandler handler;
     
     GUIButton generateBtn; 
-    GUISlider testSlider, landSlider, landMassSlider; 
+    GUISlider testSlider, landSlider, landMassSlider, riverNumSlider; 
     
     boolean running = true;
     
@@ -41,13 +41,15 @@ public class Renderer implements Runnable{
         testSlider = new GUISlider(50,500,150,250,10,50,false);
         landSlider = new GUISlider(50,200,200,600,50,50,false);
         landMassSlider = new GUISlider(50, 300, 1, 5,1,50,true);
+        riverNumSlider = new GUISlider(50,400,4,10,1,50,true);
         
-        generator = new DefaultMapGenerator(null, new VoronoiPerlinAltitudeGenerator(landSlider, landMassSlider),null,new VoronoiRiverGenerator(testSlider),null,new SmoothedAltitudeDependantLandGenerator(testSlider),new BiomeDependantImageGenerator());
+        generator = new DefaultMapGenerator(null, new VoronoiPerlinAltitudeGenerator(landSlider, landMassSlider),null,new VoronoiRiverGenerator(testSlider, riverNumSlider),null,new SmoothedAltitudeDependantLandGenerator(testSlider),new BiomeDependantImageGenerator());
         map = generator.generateMap();
         handler = new GUIHandler(map);
         handler.sliders.add(landSlider);
         handler.sliders.add(testSlider);
         handler.sliders.add(landMassSlider);
+        handler.sliders.add(riverNumSlider);
         generateBtn = new GUIButton(()-> generateMap(), 50,530,50,25);
         handler.btns.add(generateBtn);
     }
@@ -68,6 +70,7 @@ public class Renderer implements Runnable{
         landSlider.paint(g);
         testSlider.paint(g);
         generateBtn.paint(g);
+        riverNumSlider.paint(g);
         //Displays the graphics to the window
         g.dispose();
         bs.show();
