@@ -19,7 +19,7 @@ import pathfinding.PathFinder;
 public class VoronoiRiverGenerator implements RiverGenerator{
     
     
-    private final PathFinder riverFinder = new PathFinder(new Heuristic(0.00001,PathFinder.euclideanDistance), new Heuristic(3,(a,b)->(double)Utils.randInt(0,100)),new Heuristic(20,(a,b)->(double)a.altitude));
+    private final PathFinder riverFinder = new PathFinder(new Heuristic(0.5,PathFinder.euclideanDistance), new Heuristic(3,(a,b)->(double)Utils.randInt(0,100)),new Heuristic(20,(a,b)->(double)a.altitude));
     
     private final GUISlider minAltitude, riverNum;
     
@@ -37,11 +37,14 @@ public class VoronoiRiverGenerator implements RiverGenerator{
             System.out.println("Finding river: "+(r+1) +"/"+(int)riverNum.getNum());
             Centroid start = Map.centroids[Utils.randInt(0,Map.centroids.length)];
             while(start.altitude<minAltitude.getNum()*ALTITUDE_CONSTANT&&!map[start.y][start.x].isLand()) start = Map.centroids[Utils.randInt(0,Map.centroids.length)];
+            System.out.println("Land Found");
             Point startPoint = map[start.y][start.x];
             //Point start = map[1000][1000];
             try{
                 Point sea = findSea(startPoint,map);
+                System.out.println("Sea Found");
                 LinkedList<Point> river = riverFinder.generatePath(map[start.y][start.x], sea, map);
+                System.out.println("River Found: " + river.size());
                 //river.forEach(x->x.biome = Biome.RIVER);
                 for(int i = 0; i<river.size();i++){
                     setRiver(i,river.get(i),map);
@@ -85,21 +88,18 @@ public class VoronoiRiverGenerator implements RiverGenerator{
         while(!frontier.isEmpty()){
             Point p = frontier.remove(0);
             if(!visited.contains(p)){
-                if(p.biome != Biome.LAND) return p;
+                if(p.biome == Biome.SEA||p.biome == Biome.RIVER) return p;
                 visited.add(p);
+                //p.biome = Biome.VISITED;
 
-                if(checkPoint(p.x,p.y+1,map,p,visited)){
-                    frontier.add(map[p.y+1][p.x]);
-                }
-                if(checkPoint(p.x+1,p.y,map,p,visited)){
-                    frontier.add(map[p.y][p.x+1]);
-                }
-                if(checkPoint(p.x-1,p.y,map,p,visited)){
-                    frontier.add(map[p.y][p.x-1]);
-                }
-                if(checkPoint(p.x,p.y-1,map,p,visited)){
-                    frontier.add(map[p.y-1][p.x]);
-                }
+                if(checkPoint(p.x,p.y+1,map,p,visited))frontier.add(map[p.y+1][p.x]);
+                
+                if(checkPoint(p.x+1,p.y,map,p,visited))frontier.add(map[p.y][p.x+1]);
+                
+                if(checkPoint(p.x-1,p.y,map,p,visited))frontier.add(map[p.y][p.x-1]);
+                
+                if(checkPoint(p.x,p.y-1,map,p,visited))frontier.add(map[p.y-1][p.x]);
+                
             }
         }
         throw new SeaNotFoundException();
