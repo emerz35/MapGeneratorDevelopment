@@ -73,6 +73,7 @@ public class PathFinder {
     }
     
     public LinkedList<Point> generatePath(Point start, Point end, Point[][] map){
+        toVisit.clear();
         PathFindingPoint point = new PathFindingPoint(start);
         point.cost = 0;
         
