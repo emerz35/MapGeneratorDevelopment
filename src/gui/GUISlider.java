@@ -13,14 +13,14 @@ public class GUISlider {
     private int sX;
     
     /**
-     * 
-     * @param x
-     * @param y
-     * @param min
-     * @param max
-     * @param spacing
-     * @param length
-     * @param sticky 
+     * Constructor for the slider
+     * @param x x coordinate of the left most point of the slider
+     * @param y y coordinate of the middle of the slider
+     * @param min Value corresponding to the left most point of the slider
+     * @param max Value corresponding to the right most point of the slider
+     * @param spacing The gap in terms of values between adjacent bars 
+     * @param length The absolute length of the slider in terms of pixels
+     * @param sticky Whether the slider sticks to integer values or not - sticky should be false for large differences between min and max
      */
     public GUISlider(int x, int y, int min, int max, int spacing, int length, boolean sticky) {
         absX = x;
@@ -32,9 +32,10 @@ public class GUISlider {
         this.sticky = sticky;
         sX = x;
     }
+    
     /**
-     * 
-     * @param g 
+     * Paints the slider to the graphics
+     * @param g The graphics used to paint slider
      */
     public void paint(Graphics2D g) {
         
@@ -59,10 +60,10 @@ public class GUISlider {
     }
     
     /**
-     * 
-     * @param mx
-     * @param my
-     * @return 
+     * Checks whether the mouse in within of the slider handle
+     * @param mx x coordinate of the mouse
+     * @param my y coordinate of the mouse
+     * @return whether the mouse in within of the slider handle
      */
     public boolean inBounds(int mx, int my) {
         return mx >= sX && mx <= sX+sWidth && my >= absY - sHeight/2 && my <= absY+sHeight;

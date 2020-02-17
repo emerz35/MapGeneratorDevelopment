@@ -9,7 +9,12 @@ import map.Point;
  * @author Charlie
  */
 public class BiomeDependantImageGenerator implements ImageGenerator{
-
+    
+    /**
+     * Creates and image of the map. Each point is the colour given by that point's biome
+     * @param map The map to create an image of
+     * @return The image of the map
+     */
     @Override
     public BufferedImage generateImage(Point[][] map) {
         BufferedImage image = new BufferedImage(map[0].length,map.length,BufferedImage.TYPE_INT_RGB);

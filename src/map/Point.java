@@ -16,10 +16,10 @@ public class Point {
     }
     
     /**
-     * 
-     * @param x
-     * @param y
-     * @return 
+     * Calculates the euclidean distance of this point to the point (x,y)
+     * @param x The x coordinate of the point to calculate the distance to
+     * @param y The y coordinate of the point to calculate the distance to
+     * @return The distance of this point to (x,y) squared
      */
     public int distanceSquaredTo(int x, int y) {
         return (this.x - x)*(this.x - x) + (this.y - y)*(this.y - y);

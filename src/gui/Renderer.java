@@ -101,6 +101,9 @@ public class Renderer implements Runnable{
         stop();
     }
     
+    /**
+     * Generates a new map
+     */
     private void generateMap(){
         map = generator.generateMap();
         handler.changeMap(map);

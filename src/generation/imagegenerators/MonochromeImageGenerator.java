@@ -9,7 +9,12 @@ import map.Point;
  * @author Charlie
  */
 public class MonochromeImageGenerator implements ImageGenerator{
-
+    
+    /**
+     * Creates a monochrome image of a map based on each point's altitude -  used a debugging
+     * @param map The map to generate an image of
+     * @return The image of the map
+     */
     @Override
     public BufferedImage generateImage(Point[][] map) {
         BufferedImage image = new BufferedImage(map[0].length,map.length,BufferedImage.TYPE_INT_RGB);

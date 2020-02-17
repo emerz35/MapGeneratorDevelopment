@@ -26,6 +26,7 @@ public class SmoothedAltitudeDependantLandGenerator implements LandGenerator{
         
         map = landGen.generate(map);
         
+        //Noises the map NOISE_ITERATIONS times
         for(int i = 0; i < NOISE_ITERATIONS;i++)
             map = noise(map);
         
@@ -34,7 +35,11 @@ public class SmoothedAltitudeDependantLandGenerator implements LandGenerator{
         return map;
     }
     
-    
+    /**
+     * Adds noise to the coastline
+     * @param map The map to add noise to
+     * @return The noisy map
+     */
     public Point[][] noise(Point[][] map){
         LinkedList<Point> toSea = new LinkedList<>();
         for(int y = 0; y < map.length;y++){
@@ -92,7 +97,13 @@ public class SmoothedAltitudeDependantLandGenerator implements LandGenerator{
         return count>=num;
     }
     
-    
+    /**
+     * Checks if the given point has at least one piece of sea next to it
+     * @param map The map the point is on
+     * @param x The x coordinate of the point
+     * @param y The y coordinate of the point
+     * @return if the given point has at least one piece of sea next to it
+     */
     private boolean hasSeaNeighbour(Point[][] map, int x, int y){
         for(int i = -1; i < 2;i++){
             for(int j = -1;j<2;j++){
