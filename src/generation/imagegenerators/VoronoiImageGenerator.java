@@ -10,6 +10,11 @@ import map.Point;
  */
 public class VoronoiImageGenerator implements ImageGenerator{
 
+    /**
+     * Creates an image of the map, drawing each voronoi polygon a different colour - used for debugging
+     * @param map
+     * @return 
+     */
     @Override
     public BufferedImage generateImage(Point[][] map) {
         BufferedImage image = new BufferedImage(map[0].length,map.length,BufferedImage.TYPE_INT_RGB);

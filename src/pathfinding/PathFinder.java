@@ -2,7 +2,6 @@ package pathfinding;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.function.BiFunction;
 import map.Point;
 
@@ -67,33 +66,54 @@ public class PathFinder {
         return current.cost + 1 + (int)sum;
     }
     
-    
+    /**
+     * Checks if 2 points have the same x and y coordinate (are equal)
+     * @param a A point to check
+     * @param b A point to check
+     * @return Whether a & b are equal
+     */
     private boolean pointEquals(Point a, Point b){
         return a.x == b.x && a.y == b.y;
     }
     
+    /**
+     * Finds a path between start and end using the heuristics given
+     * @param start The point to start from
+     * @param end The end point
+     * @param map The map that contains the points
+     * @return A list containing all the points in the path
+     */
     public LinkedList<Point> generatePath(Point start, Point end, Point[][] map){
+        //Clears the list of visited points
         toVisit.clear();
+        
+        //Creates a PathFindingPoint from the start point and sets its cost to 0
         PathFindingPoint point = new PathFindingPoint(start);
         point.cost = 0;
         
+        //Creates a map of PathFindingPoints
         PathFindingPoint[][] pathMap = new PathFindingPoint[map.length][map[0].length]; 
         
         pathMap[start.y][start.x] = point;
         toVisit.add(point);
         PathFindingPoint temp;
         int ny,nx;
+        //Loops until there are no points to visit - this should never be false as it should find the point before this happens
         while(!toVisit.isEmpty()){
+            //finds the point with the lowest cost
             point = getLowestCost();
             if(!point.visited){
+                //exits the loop if the point being visited is the end point
                 if(pointEquals(point.point,end)) break;
             
                 point.visited = true;
-
+                
+                //Checks all neighbours
                 for(int[] g:gs){
                     ny = point.point.y+g[1];
                     nx = point.point.x+g[0];
                     if(ny>=0&&ny<map.length&&nx>=0&&nx<map[0].length){
+                        //Creates a new PathFindingPoint if the the point being checked has never been checked before 
                         if(pathMap[ny][nx]==null){
                             temp = new PathFindingPoint(map[ny][nx]);
                             temp.cost = getCost(temp.point,point,end);
@@ -101,6 +121,7 @@ public class PathFinder {
                             pathMap[ny][nx] = temp;
                             
                             insertPoint(temp);
+                        //If the point has been checked before, it updates its cost and readds it to the list of points to visit with its updated cost if its new cost is lower than its previous cost
                         }else{
                             temp = pathMap[ny][nx];
                             int cost = getCost(temp.point,point,end);
@@ -117,15 +138,11 @@ public class PathFinder {
         }
         LinkedList<Point> path = new LinkedList<>();
         
+        //Backtracks from the start point to add the path to a list
         while(point.from!=null){
             path.addFirst(point.point);
             point = point.from;
         }
         return path;
-    }
-    
-    private boolean containsPoint(List<PathFindingPoint> points,Point p){
-        return points.stream().anyMatch(x->pointEquals(x.point,p));
-        
     }
 }

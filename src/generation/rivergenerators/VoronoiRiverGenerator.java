@@ -30,39 +30,46 @@ public class VoronoiRiverGenerator implements RiverGenerator{
         minAltitude = s;
         riverNum = r;
     }
-            
+     
+    /**
+     * Generates rivers on the map
+     * @param map The map to generate the rivers on
+     * @return The map with the rivers generated on
+     */
     @Override
     public Point[][] generate(Point[][] map) {
         for(int r = 0;r<riverNum.getNum();r++){
             System.out.println("Finding river: "+(r+1) +"/"+(int)riverNum.getNum());
             Centroid start = Map.centroids[Utils.randInt(0,Map.centroids.length)];
             while(start.altitude<minAltitude.getNum()*ALTITUDE_CONSTANT&&!map[start.y][start.x].isLand()) start = Map.centroids[Utils.randInt(0,Map.centroids.length)];
-            System.out.println("Land Found");
             Point startPoint = map[start.y][start.x];
-            //Point start = map[1000][1000];
+            
             try{
-                Point sea = findSea(startPoint,map);
-                System.out.println("Sea Found");
+                Point sea = findSea(startPoint,map); 
                 LinkedList<Point> river = riverFinder.generatePath(map[start.y][start.x], sea, map);
-                System.out.println("River Found: " + river.size());
-                //river.forEach(x->x.biome = Biome.RIVER);
+                
+                
                 for(int i = 0; i<river.size();i++){
                     setRiver(i,river.get(i),map);
                 }
-                //sea.biome = Biome.RIVER;
+                
             }catch(SeaNotFoundException e){
                 System.err.println(e.getMessage());
-                //e.printStackTrace();
             }
         }
         return map;
     }
     
-    
+    /**
+     * Sets the tiles around a point as river - used for river widening as the river progresses
+     * @param num The distance down the river the point is
+     * @param p the point that is a river
+     * @param map the map that the point is on
+     */
     private void setRiver(int num, Point p, Point[][] map){
         //p.biome = Biome.RIVER;
         //double width = Math.log1p((double)num/2d);
-        double width = Math.sqrt((double)num)/2;
+        double width = Math.exp((double)num/45d);
         for(int i = (int)(-width/2d);i<=(int)(width/2d);i++){
             for(int j = (int)(-width/2d);j<=(int)(width/2d);j++){
                 int nx = p.x+j,ny = p.y+i;
@@ -106,10 +113,12 @@ public class VoronoiRiverGenerator implements RiverGenerator{
     }
     
     /**
-     * 
-     * @param x
-     * @param y
-     * @param map
+     * Checks points for the flood fill - return true if the pont is within bounds of the map and is the same or lower altitude as the previous point and hasn't been visited yet
+     * @param x The x coordinate of the point being checked
+     * @param y The y coordinate of the point being checked
+     * @param map The map the point is on
+     * @param current the point being visited
+     * @param visited a list of visited points
      * @return 
      */
     private boolean checkPoint(int x, int y, Point[][] map, Point current, LinkedList<Point> visited){

@@ -17,16 +17,29 @@ public class GUIButton {
         this.width = width;
         this.height = height;
     }
-
+    
+    /**
+     * Paints the button to the graphics
+     * @param g The graphics used to paint the button
+     */
     public void paint(Graphics2D g) {
         g.setColor(Color.gray);
         g.fill3DRect(x, y, width, height, true);
     }
-
+    
+    /**
+     * Calls the action on ButtonAction interface
+     */
     public void action() {
         action.action();
     }
-
+    
+    /**
+     * Checks if the mouse has clicked within the bounds of the button
+     * @param mx x coordinate of the mouse
+     * @param my y coordinate of the mouse
+     * @return Whether the mouse is in bounds or not
+     */
     public boolean inBounds(int mx, int my) {
         return mx >= x && mx <= x+width && my >= y && my <= y+height;
     }

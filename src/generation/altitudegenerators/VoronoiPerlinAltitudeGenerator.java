@@ -49,12 +49,13 @@ public class VoronoiPerlinAltitudeGenerator implements AltitudeGenerator{
         PerlinNoiseAltitudeGenerator.generatePs();
         double s = sSlider.getNum();
         
+        //Creates a centroid corresponding to each 'landmass' specified by the land mass slider
         Centroid[] landMasses = new Centroid[(int)landMassSlider.getNum()];
         
         for(int i = 0;i<landMassSlider.getNum();i++)
             landMasses[i] = new Centroid(Utils.randInt((int)((double)map[0].length/4d), (int)(3d*(double)map[0].length/4d)),Utils.randInt((int)((double)map.length/4d), (int)(3d*(double)map.length/4d)),0);
         
-        
+        //Sets the altitude of each voronoi centroid as perlin noise altitude * kernel (depending on distance to nearest land mass centroid)
         for(Centroid c:centroids){
             Centroid closest = getClosestCentroid(landMasses,c.x,c.y);
             c.altitude = (int)((double)perlin.getAltitudeAt(c.x, c.y, perlin.OCTAVES)*Utils.kernel((c.x-closest.x)*(c.x-closest.x)+(c.y-closest.y)*(c.y-closest.y),s));
@@ -62,10 +63,11 @@ public class VoronoiPerlinAltitudeGenerator implements AltitudeGenerator{
         
         Map.centroids = centroids;
         
+        //Sets each point's altitude to the altitude of its centroid
         for (Point[] map1 : map) {
             for (Point map11 : map1) {
                 map11.altitude = map11.centroid.altitude;
-                setNeighbours(map11,map);
+                //setNeighbours(map11,map);
             }
         }
         
@@ -73,6 +75,12 @@ public class VoronoiPerlinAltitudeGenerator implements AltitudeGenerator{
         return map;
     }
     
+    /**
+     * @deprecated 
+     * No longer needed
+     * @param p
+     * @param map 
+     */
     private void setNeighbours(Point p, Point[][] map){
         for(int i = -1;i<2;i++){
             for(int j = -1;j<2;j++){
@@ -84,6 +92,7 @@ public class VoronoiPerlinAltitudeGenerator implements AltitudeGenerator{
     }
     
     /**
+     * Generates a voronoi polygon for the given centroid
      * @param c The centroid of the polygon
      * @param map The map to generate the polygon on
      * @return the map with the polygon on
@@ -116,12 +125,12 @@ public class VoronoiPerlinAltitudeGenerator implements AltitudeGenerator{
     }
     
     /**
-     * 
-     * @param x
-     * @param y
-     * @param c
-     * @param map
-     * @return 
+     * Checks the point to see if it should be part of the centroid c
+     * @param x x coordinate of point being checked
+     * @param y y coordinate of point being checked
+     * @param c The current centroid
+     * @param map The map the point is on
+     * @return Whether the point should belong to the centroid c
      */
     private boolean checkPoint(int x, int y, Centroid c, Point[][] map){
         if(y>=map.length||y<0) return false;
@@ -156,11 +165,11 @@ public class VoronoiPerlinAltitudeGenerator implements AltitudeGenerator{
     }
     
     /**
-     * 
-     * @param cs
-     * @param x
-     * @param y
-     * @return 
+     * Gets the closest centroid in a list to the point (x,y)
+     * @param cs The list of centroids
+     * @param x The x coordinate of the point
+     * @param y The y coordinate of the point
+     * @return The closest centroid to (x,y)
      */
     private Centroid getClosestCentroid(Centroid[] cs, int x, int y){
         Centroid c2 = cs[0];

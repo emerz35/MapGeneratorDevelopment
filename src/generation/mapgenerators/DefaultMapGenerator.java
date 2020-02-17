@@ -12,14 +12,23 @@ import map.Map;
 import map.Point;
 
 /**
- *
+ * The default map generator that will be used. It inherits from a super class MapGenerator in case there is need to create different map generators
  * @author Charlie Hands
  */
 public class DefaultMapGenerator extends MapGenerator{
     
     private final static int MAP_WIDTH = 2400, MAP_HEIGHT = 1600;
     
-
+    /**
+     * 
+     * @param b The biome generator
+     * @param a The altitude generator 
+     * @param c The country generator
+     * @param r The river generator
+     * @param rd The road generator
+     * @param l The land generator
+     * @param i The image generator
+     */
     public DefaultMapGenerator(BiomeGenerator b, AltitudeGenerator a, CountryGenerator c, RiverGenerator r, RoadGenerator rd, LandGenerator l, ImageGenerator i) {
         super(b, a, c, r, rd, l, i);
     }
