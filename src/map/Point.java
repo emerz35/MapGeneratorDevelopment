@@ -10,6 +10,8 @@ public class Point {
     
     public Biome biome = Biome.SEA;
     
+    public int[] prevailingWind = new int[2];
+    
     public Point(int x, int y){
         this.x = x;
         this.y = y;
