@@ -20,7 +20,7 @@ import map.Point;
 public class WhittakerBiomeGenerator implements BiomeGenerator{
 
     private static final String DIAGRAM = "images_test\\WhittakerDiagram.png";
-    private static final double ALTITUDE_CONSTANT = 1.5,DISTANCE_CONSTANT = 20;
+    private static final double ALTITUDE_CONSTANT = 1.2,DISTANCE_CONSTANT = 20;
     
     private final GUISlider seaSlider;
     
@@ -84,9 +84,9 @@ public class WhittakerBiomeGenerator implements BiomeGenerator{
                 //if(highestAlti<ALTITUDE_CONSTANT*(double)c.altitude)precipitation++;
                 if(highestAlti>ALTITUDE_CONSTANT*(double)c.altitude)precipitation--;
                 else if(distance<DISTANCE_CONSTANT)precipitation++;
-                if(latitude>3d*(double)map.length/12d&&latitude<5d*(double)map.length/12d)precipitation-=3;
+                if(latitude>(double)map.length/8d&&latitude<5d*(double)map.length/24d)precipitation=0;
                 
-                if(latitude<(double)map.length/25d)precipitation+=2;
+                if(latitude<(double)map.length/24d)precipitation=3;
                 
                 if(precipitation<0) precipitation = 0;
                 if(precipitation>4)precipitation = 4;
