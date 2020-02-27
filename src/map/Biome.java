@@ -18,7 +18,9 @@ public enum Biome {
     WOODLAND(79,97,45),
     TEMPERATE_GRASSLANDS(153,153,0),
     TAIGA(255,250,250),
-    TUNDRA(240,255,255);
+    TUNDRA(240,255,255),
+    UNDECIDED(0,0,0)
+    ;
     
     public int red,blue,green;
     Biome(int r, int g, int b){

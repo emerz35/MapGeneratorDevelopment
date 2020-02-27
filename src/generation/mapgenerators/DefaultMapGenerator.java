@@ -47,6 +47,8 @@ public class DefaultMapGenerator extends MapGenerator{
         map = landGen.generate(altiGen.generate(map));
         //System.out.println(System.currentTimeMillis()-start);
         map = rivGen.generate(map);
+        
+        map = biomeGen.generate(map);
                 
         return new Map(imageGen.generateImage(map));
     }
