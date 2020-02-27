@@ -8,6 +8,8 @@ public class Point {
     
     public Centroid centroid;
     
+    public Country country;
+    
     public Biome biome = Biome.SEA;
     
     public int[] prevailingWind = new int[2];
