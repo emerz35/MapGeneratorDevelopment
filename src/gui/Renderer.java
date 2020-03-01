@@ -8,6 +8,7 @@ import generation.imagegenerators.BiomeDependantImageGenerator;
 import generation.landgenerators.SmoothedAltitudeDependantLandGenerator;
 import generation.mapgenerators.DefaultMapGenerator;
 import generation.rivergenerators.VoronoiRiverGenerator;
+import generation.roadgenerators.DefaultRoadGenerator;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
@@ -46,7 +47,7 @@ public class Renderer implements Runnable{
         riverNumSlider = new GUISlider(50,400,5,20,1,50,true);
         countryNumSlider = new GUISlider(50,100,1,5,1,50,true);
         
-        generator = new DefaultMapGenerator(new WhittakerBiomeGenerator(landAltiSlider), new VoronoiPerlinAltitudeGenerator(landSlider, landMassSlider),new DefaultCountryGenerator(countryNumSlider,landAltiSlider),new VoronoiRiverGenerator(landAltiSlider, riverNumSlider),null,new SmoothedAltitudeDependantLandGenerator(landAltiSlider),new BiomeDependantImageGenerator());
+        generator = new DefaultMapGenerator(new WhittakerBiomeGenerator(landAltiSlider), new VoronoiPerlinAltitudeGenerator(landSlider, landMassSlider),new DefaultCountryGenerator(countryNumSlider,landAltiSlider),new VoronoiRiverGenerator(landAltiSlider, riverNumSlider),new DefaultRoadGenerator(),new SmoothedAltitudeDependantLandGenerator(landAltiSlider),new BiomeDependantImageGenerator());
         map = generator.generateMap();
         handler = new GUIHandler(map);
         handler.sliders.add(landSlider);

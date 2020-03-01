@@ -51,6 +51,8 @@ public class DefaultMapGenerator extends MapGenerator{
         map = biomeGen.generate(map);
         
         map = countryGen.generate(map);
+        
+        map = roadGen.generate(map);
                 
         return new Map(imageGen.generateImage(map));
     }
