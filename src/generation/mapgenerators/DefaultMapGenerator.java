@@ -49,6 +49,8 @@ public class DefaultMapGenerator extends MapGenerator{
         map = rivGen.generate(map);
         
         map = biomeGen.generate(map);
+        
+        map = countryGen.generate(map);
                 
         return new Map(imageGen.generateImage(map));
     }

@@ -3,6 +3,7 @@ package gui;
 import generation.MapGenerator;
 import generation.altitudegenerators.VoronoiPerlinAltitudeGenerator;
 import generation.biomegenerators.WhittakerBiomeGenerator;
+import generation.countrygenerators.DefaultCountryGenerator;
 import generation.imagegenerators.BiomeDependantImageGenerator;
 import generation.landgenerators.SmoothedAltitudeDependantLandGenerator;
 import generation.mapgenerators.DefaultMapGenerator;
@@ -29,7 +30,7 @@ public class Renderer implements Runnable{
     public GUIHandler handler;
     
     GUIButton generateBtn; 
-    GUISlider landAltiSlider, landSlider, landMassSlider, riverNumSlider; 
+    GUISlider landAltiSlider, landSlider, landMassSlider, riverNumSlider, countryNumSlider; 
     
     boolean running = true;
     
@@ -43,14 +44,16 @@ public class Renderer implements Runnable{
         landSlider = new GUISlider(50,200,200,600,50,50,false);
         landMassSlider = new GUISlider(50, 300, 1, 5,1,50,true);
         riverNumSlider = new GUISlider(50,400,5,20,1,50,true);
+        countryNumSlider = new GUISlider(50,100,1,5,1,50,true);
         
-        generator = new DefaultMapGenerator(new WhittakerBiomeGenerator(landAltiSlider), new VoronoiPerlinAltitudeGenerator(landSlider, landMassSlider),null,new VoronoiRiverGenerator(landAltiSlider, riverNumSlider),null,new SmoothedAltitudeDependantLandGenerator(landAltiSlider),new BiomeDependantImageGenerator());
+        generator = new DefaultMapGenerator(new WhittakerBiomeGenerator(landAltiSlider), new VoronoiPerlinAltitudeGenerator(landSlider, landMassSlider),new DefaultCountryGenerator(countryNumSlider,landAltiSlider),new VoronoiRiverGenerator(landAltiSlider, riverNumSlider),null,new SmoothedAltitudeDependantLandGenerator(landAltiSlider),new BiomeDependantImageGenerator());
         map = generator.generateMap();
         handler = new GUIHandler(map);
         handler.sliders.add(landSlider);
         handler.sliders.add(landAltiSlider);
         handler.sliders.add(landMassSlider);
         handler.sliders.add(riverNumSlider);
+        handler.sliders.add(countryNumSlider);
         generateBtn = new GUIButton(()-> generateMap(), 50,530,50,25);
         handler.btns.add(generateBtn);
     }
@@ -72,6 +75,7 @@ public class Renderer implements Runnable{
         landAltiSlider.paint(g);
         generateBtn.paint(g);
         riverNumSlider.paint(g);
+        countryNumSlider.paint(g);
         //Displays the graphics to the window
         g.dispose();
         bs.show();
@@ -106,6 +110,7 @@ public class Renderer implements Runnable{
      * Generates a new map
      */
     private void generateMap(){
+        Map.labels.clear();
         map = generator.generateMap();
         handler.changeMap(map);
         System.out.println("New Map Generated");

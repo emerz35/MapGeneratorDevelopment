@@ -1,12 +1,8 @@
 package main;
 
-import generation.biomegenerators.WhittakerBiomeGenerator;
-import java.awt.image.BufferedImage;
-import java.awt.image.WritableRaster;
-import java.io.File;
+import generation.namegenerators.NameGenerator;
 import java.io.IOException;
 import java.util.Random;
-import javax.imageio.ImageIO;
 
 public class Utils {
 
@@ -37,19 +33,14 @@ public class Utils {
         for(int i=0;i<3;i++)if(a[i]!=b[i])return false;
         return true;
     }
-    /*
+   
     public static void main(String... args) throws IOException{
-        BufferedImage image = ImageIO.read(new File(WhittakerBiomeGenerator.DIAGRAM));
-        int[] pixel = new int[4];
-        WritableRaster r = image.getRaster();
-        for(int y = 0; y<image.getHeight();y++){
-            for(int x = 0;x<image.getWidth();x++){
-                pixel = r.getPixel(x, y, pixel);
-                if(pixelEquals(pixel,255,174,201))System.out.println(x+", "+y);
-                //System.out.println("ok");
-                //System.out.println(image.isAlphaPremultiplied());
-            }
-        }
+       NameGenerator test = new NameGenerator();
+       
+       System.out.println(test.generateName());
+       System.out.println(test.generateName());
+       System.out.println(test.generateName());
+       System.out.println(test.generateName());
     }
-    */
+    
 }
