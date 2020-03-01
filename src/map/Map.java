@@ -5,12 +5,14 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
 import javax.imageio.ImageIO;
 import main.Main;
 
 public class Map {
     
     public static Centroid[] centroids = null;
+    public static final LinkedList<Label> labels =  new LinkedList<>();
     
     private final double MAX_ZOOM, MIN_ZOOM;
     public static final int TOP_LEFT_X = Main.M_WIDTH/4, TOP_LEFT_Y = 0, AREA_WIDTH = 3*Main.M_WIDTH/4, AREA_HEIGHT = Main.M_HEIGHT;
@@ -34,6 +36,7 @@ public class Map {
         AffineTransform t = AffineTransform.getTranslateInstance(topX, topY);
         t.scale(zoom, zoom);
         g.drawImage(image, t, null);
+        //labels.forEach(x->x.render(g));
     }
     /**
      * 

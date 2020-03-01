@@ -1,8 +1,10 @@
 package generation.imagegenerators;
 
 import generation.ImageGenerator;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import map.Point;
+import map.Map;
 
 /**
  *
@@ -23,6 +25,8 @@ public class BiomeDependantImageGenerator implements ImageGenerator{
                 image.setRGB(x, y, map[y][x].biome.red *256*256+map[y][x].biome.green*256+map[y][x].biome.blue);
             }
         }
+        Graphics2D g = image.createGraphics();
+        Map.labels.forEach(x->x.render(g));
         return image;
     }
     
