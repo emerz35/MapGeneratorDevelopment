@@ -41,7 +41,7 @@ public class DefaultRoadGenerator implements RoadGenerator{
                 if(s.type != Settlement.SettlementType.CAPITAL_CITY) path = roadFinder.generatePath(map[capital.y][capital.x], map[s.y][s.x], map);
                 path.forEach(x->{
                     if(x.biome != Biome.SETTLEMENT&&x.biome != Biome.SEA){
-                        if(x.biome == Biome.RIVER) x.biome = Biome.BRIGDE;
+                        if(x.biome == Biome.RIVER) x.biome = Biome.BRIDGE;
                         else x.biome = Biome.ROAD;
                     }
                 });
