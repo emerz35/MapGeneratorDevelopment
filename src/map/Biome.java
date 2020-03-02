@@ -21,7 +21,7 @@ public enum Biome {
     TUNDRA(240,255,255,50),
     SETTLEMENT(255,0,0,1000),
     ROAD(155,118,83,0),
-    BRIGDE(222,184,135,0),
+    BRIDGE(222,184,135,0),
     BORDER(0,0,0,0);
     
     public int red,blue,green,cost;
