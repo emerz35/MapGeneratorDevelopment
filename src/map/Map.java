@@ -46,6 +46,16 @@ public class Map {
     public void saveToFile(String filePath) throws IOException {
         ImageIO.write(image, "png", new File(filePath));
     }
+    
+    /**
+     * 
+     * @param file The file to write to
+     * @throws IOException 
+     */
+    public void saveToFile(File file) throws IOException {
+        ImageIO.write(image, "png", file);
+    }
+    
     /**
      * Zooms the map in or out dependant on the integer change. Math.pow has been used instead of coding own power to handle negative powers 
      * @param change The number of mouse wheel 'clicks' that have been moved 

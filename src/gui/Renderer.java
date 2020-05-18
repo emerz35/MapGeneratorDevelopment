@@ -12,6 +12,8 @@ import generation.roadgenerators.DefaultRoadGenerator;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
+import java.io.IOException;
+import javax.swing.JFileChooser;
 import main.Main;
 import map.Map;
 
@@ -30,7 +32,7 @@ public class Renderer implements Runnable{
     
     public GUIHandler handler;
     
-    GUIButton generateBtn; 
+    GUIButton generateBtn, saveBtn; 
     GUISlider landAltiSlider, landSlider, landMassSlider, riverNumSlider, countryNumSlider; 
     
     boolean running = true;
@@ -41,11 +43,11 @@ public class Renderer implements Runnable{
      */
     public Renderer(Main m){
         main = m;
-        landAltiSlider = new GUISlider(50,500,150,250,10,50,false);
-        landSlider = new GUISlider(50,200,200,600,50,50,false);
-        landMassSlider = new GUISlider(50, 300, 1, 5,1,50,true);
-        riverNumSlider = new GUISlider(50,400,5,20,1,50,true);
-        countryNumSlider = new GUISlider(50,100,1,5,1,50,true);
+        landAltiSlider = new GUISlider("Land Alitude",50,500,150,250,10,75,false);
+        landSlider = new GUISlider("Land Mass Size",50,200,200,600,50,75,false);
+        landMassSlider = new GUISlider("Land Mass Num",50, 300, 1, 5,1,75,true);
+        riverNumSlider = new GUISlider("River Num",50,400,5,20,1,75,true);
+        //countryNumSlider = new GUISlider(50,100,1,5,1,50,true);
         
         generator = new DefaultMapGenerator(new WhittakerBiomeGenerator(landAltiSlider), new VoronoiPerlinAltitudeGenerator(landSlider, landMassSlider),new DefaultCountryGenerator(countryNumSlider,landAltiSlider),new VoronoiRiverGenerator(landAltiSlider, riverNumSlider),new DefaultRoadGenerator(),new SmoothedAltitudeDependantLandGenerator(landAltiSlider),new BiomeDependantImageGenerator());
         map = generator.generateMap();
@@ -54,9 +56,18 @@ public class Renderer implements Runnable{
         handler.sliders.add(landAltiSlider);
         handler.sliders.add(landMassSlider);
         handler.sliders.add(riverNumSlider);
-        handler.sliders.add(countryNumSlider);
-        generateBtn = new GUIButton(()-> generateMap(), 50,530,50,25);
+        //handler.sliders.add(countryNumSlider);
+        generateBtn = new GUIButton("Genenerate",()-> generateMap(), 50,530,50,25);
+        saveBtn = new GUIButton("Save", () -> {
+            JFileChooser fc = new JFileChooser();
+            try{
+                if(fc.showSaveDialog(main) == JFileChooser.APPROVE_OPTION)map.saveToFile(fc.getSelectedFile());
+            }catch(IOException e){
+                e.printStackTrace(System.err);
+            }
+        }, 120,530,50,25);
         handler.btns.add(generateBtn);
+        handler.btns.add(saveBtn);
     }
     
     /**
@@ -76,7 +87,8 @@ public class Renderer implements Runnable{
         landAltiSlider.paint(g);
         generateBtn.paint(g);
         riverNumSlider.paint(g);
-        countryNumSlider.paint(g);
+        saveBtn.paint(g);
+        //countryNumSlider.paint(g);
         //Displays the graphics to the window
         g.dispose();
         bs.show();

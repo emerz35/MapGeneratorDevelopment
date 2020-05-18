@@ -1,19 +1,26 @@
 package gui;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
+import java.text.DecimalFormat;
 
 public class GUISlider {
 
-    private final int absX,absY,length,sHeight = 24,sWidth = sHeight/2, min,max,lineSpacing;
+    private final int absX,absY,length,sHeight = 24,sWidth = sHeight/2, min,max,lineSpacing, labelOffset = 10;
 
     private final boolean sticky;
     public boolean sliding = false;
 
     private int sX;
+    private double num;
+    private String name;
+    
+    private DecimalFormat rounding = new DecimalFormat("#.##");
     
     /**
      * Constructor for the slider
+     * @param n name of the slider to display
      * @param x x coordinate of the left most point of the slider
      * @param y y coordinate of the middle of the slider
      * @param min Value corresponding to the left most point of the slider
@@ -22,10 +29,12 @@ public class GUISlider {
      * @param length The absolute length of the slider in terms of pixels
      * @param sticky Whether the slider sticks to integer values or not - sticky should be false for large differences between min and max
      */
-    public GUISlider(int x, int y, int min, int max, int spacing, int length, boolean sticky) {
+    public GUISlider(String n, int x, int y, int min, int max, int spacing, int length, boolean sticky) {
+        name = n;
         absX = x;
         absY = y;
         this.min = min;
+        num = min;
         this.max = max;
         lineSpacing = spacing;
         this.length = length;
@@ -47,6 +56,15 @@ public class GUISlider {
         //Draws lines at both ends
         g.drawLine(absX,absY+sHeight/2,absX,absY-sHeight/2);
         g.drawLine(absX+length,absY+sHeight/2,absX+length,absY-sHeight/2);
+        
+        g.setFont(new Font("Arial", Font.PLAIN,12));
+        
+        int fontHeight = g.getFontMetrics().getHeight();
+        
+        g.drawString(name,absX, absY - fontHeight);
+        
+        g.drawString(rounding.format(num), absX+length + labelOffset, absY+fontHeight/2);
+        
         
         int x = 0;
         //draws lines at specific intervals along the slider
@@ -78,14 +96,19 @@ public class GUISlider {
         else if(x>= absX+length) sX=absX+length;
         else if(!sticky)sX = x;
         else sX = absX + (int)((double)(x-absX)*(double)(max-min)/(double)length)*(int)((double)length/(double)(max-min));
+        num = calcNum();
     }
 
     /**
      * Gets the value the slider is pointing to
      * @return The value the slider is pointing to
      */
-    public double getNum() {
-        if(sticky) return min +(int)( (double)(max - min)*(double)(sX-absX)/(double)length);
+    public synchronized double getNum() {
+        return num;
+    }
+    
+    private double calcNum(){
+        if(sticky) return min +Math.rint((double)(max - min)*(double)(sX-absX)/(double)length);
         return (double)min + (double)(max - min)*(double)(sX-absX)/(double)length; 
     }
 }
