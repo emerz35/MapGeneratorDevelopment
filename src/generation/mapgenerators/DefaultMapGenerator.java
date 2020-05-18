@@ -48,12 +48,8 @@ public class DefaultMapGenerator extends MapGenerator{
         //System.out.println(System.currentTimeMillis()-start);
         map = rivGen.generate(map);
         
-        map = biomeGen.generate(map);
-        
-        map = countryGen.generate(map);
-        
-        map = roadGen.generate(map);
-                
+        //map = biomeGen.generate(map);
+         
         return new Map(imageGen.generateImage(map));
     }
     
