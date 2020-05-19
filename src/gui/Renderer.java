@@ -15,6 +15,8 @@ import java.awt.image.BufferStrategy;
 import java.io.IOException;
 import javax.swing.JFileChooser;
 import main.Main;
+import static main.Main.M_HEIGHT;
+import static main.Main.M_WIDTH;
 import map.Map;
 
 
@@ -30,10 +32,14 @@ public class Renderer implements Runnable{
     private static final long DELAY = 1000L/60L;
     private long now;
     
+    private boolean loading;
+    
     public GUIHandler handler;
     
     GUIButton generateBtn, saveBtn; 
     GUISlider landAltiSlider, landSlider, landMassSlider, riverNumSlider, countryNumSlider; 
+    
+    public static LoadingScreen loadingScreen = new LoadingScreen(M_WIDTH/4, 0);;
     
     boolean running = true;
     
@@ -79,9 +85,12 @@ public class Renderer implements Runnable{
         Graphics2D g = (Graphics2D)bs.getDrawGraphics();
         //Draws the relevant features to Graphics2d
         g.fillRect(0, 0, Main.M_WIDTH, Main.M_HEIGHT);
-        map.renderImage(g);
+        
+        if(!loading)map.renderImage(g);
+        else loadingScreen.paint(g);
+        
         g.setColor(Color.GRAY);
-        g.fill3DRect(0, 0, Main.M_WIDTH/4, Main.M_HEIGHT, true);
+        g.fill3DRect(0, 0, M_WIDTH/4, M_HEIGHT, true);
         landMassSlider.paint(g);
         landSlider.paint(g);
         landAltiSlider.paint(g);
@@ -123,10 +132,13 @@ public class Renderer implements Runnable{
      * Generates a new map
      */
     private void generateMap(){
+        System.out.println(Thread.currentThread().getName());
+        loading = true;
         Map.labels.clear();
         map = generator.generateMap();
         handler.changeMap(map);
         System.out.println("New Map Generated");
+        loading = false;
     }
     
     /**

@@ -3,6 +3,7 @@ package generation.rivergenerators;
 import exceptions.SeaNotFoundException;
 import generation.RiverGenerator;
 import gui.GUISlider;
+import static gui.Renderer.loadingScreen;
 import java.util.LinkedList;
 import main.Utils;
 import map.Biome;
@@ -39,7 +40,7 @@ public class VoronoiRiverGenerator implements RiverGenerator{
     @Override
     public Point[][] generate(Point[][] map) {
         for(int r = 0;r<riverNum.getNum();r++){
-            System.out.println("Finding river: "+(r+1) +"/"+(int)riverNum.getNum());
+            loadingScreen.message = "Creating river: "+(r+1) +"/"+(int)riverNum.getNum();
             Centroid start = Map.centroids[Utils.randInt(0,Map.centroids.length)];
             while(start.altitude<minAltitude.getNum()*ALTITUDE_CONSTANT&&!map[start.y][start.x].isLand()) start = Map.centroids[Utils.randInt(0,Map.centroids.length)];
             Point startPoint = map[start.y][start.x];

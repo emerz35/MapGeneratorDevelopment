@@ -8,6 +8,7 @@ import generation.LandGenerator;
 import generation.MapGenerator;
 import generation.RiverGenerator;
 import generation.RoadGenerator;
+import static gui.Renderer.loadingScreen;
 import map.Map;
 import map.Point;
 
@@ -35,6 +36,8 @@ public class DefaultMapGenerator extends MapGenerator{
 
     @Override
     public Map generateMap() {
+        
+        loadingScreen.message = "Initialising Map";
         Point[][] map = new Point[MAP_HEIGHT][MAP_WIDTH];
         
         for(int y = 0;y<map.length;y++){
@@ -43,13 +46,18 @@ public class DefaultMapGenerator extends MapGenerator{
             }
         }
        
+        loadingScreen.message = "Generating Altitudes";
         //long start = System.currentTimeMillis();
-        map = landGen.generate(altiGen.generate(map));
+        map = altiGen.generate(map);
+        
+        loadingScreen.message = "Generating Land";
+        map = landGen.generate(map);
         //System.out.println(System.currentTimeMillis()-start);
+        
         map = rivGen.generate(map);
         
         //map = biomeGen.generate(map);
-         
+        loadingScreen.message = "Finishing up"; 
         return new Map(imageGen.generateImage(map));
     }
     
