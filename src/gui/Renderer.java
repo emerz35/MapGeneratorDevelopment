@@ -32,14 +32,14 @@ public class Renderer implements Runnable{
     private static final long DELAY = 1000L/60L;
     private long now;
     
-    private boolean loading;
+    public static volatile boolean loading;
     
     public GUIHandler handler;
     
     GUIButton generateBtn, saveBtn; 
     GUISlider landAltiSlider, landSlider, landMassSlider, riverNumSlider, countryNumSlider; 
     
-    public static LoadingScreen loadingScreen = new LoadingScreen(M_WIDTH/4, 0);;
+    public static LoadingScreen loadingScreen = new LoadingScreen(M_WIDTH/4, 0);
     
     boolean running = true;
     
@@ -63,7 +63,7 @@ public class Renderer implements Runnable{
         handler.sliders.add(landMassSlider);
         handler.sliders.add(riverNumSlider);
         //handler.sliders.add(countryNumSlider);
-        generateBtn = new GUIButton("Genenerate",()-> generateMap(), 50,530,50,25);
+        generateBtn = new GUIButton("Genenerate",()-> new Thread(()->generateMap()).start(), 50,530,50,25);
         saveBtn = new GUIButton("Save", () -> {
             JFileChooser fc = new JFileChooser();
             try{
@@ -132,7 +132,7 @@ public class Renderer implements Runnable{
      * Generates a new map
      */
     private void generateMap(){
-        System.out.println(Thread.currentThread().getName());
+        //System.out.println(Thread.currentThread().getName());
         loading = true;
         Map.labels.clear();
         map = generator.generateMap();

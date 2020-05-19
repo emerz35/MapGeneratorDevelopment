@@ -1,5 +1,6 @@
 package gui;
 
+import static gui.Renderer.loading;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
@@ -36,7 +37,7 @@ public class GUIHandler extends MouseAdapter{
      */
     @Override
     public void mouseClicked(MouseEvent e){
-        btns.stream().filter(x->x.inBounds(e.getX(), e.getY())).forEach(x->x.action());
+        if(!loading)btns.stream().filter(x->x.inBounds(e.getX(), e.getY())).forEach(x->x.action());
     }
     
     /**
