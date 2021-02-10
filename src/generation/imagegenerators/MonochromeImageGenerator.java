@@ -11,7 +11,7 @@ import map.Point;
 public class MonochromeImageGenerator implements ImageGenerator{
     
     /**
-     * Creates a monochrome image of a map based on each point's altitude -  used a debugging
+     * Creates a monochrome image of a map based on each point's altitude -  used in debugging
      * @param map The map to generate an image of
      * @return The image of the map
      */

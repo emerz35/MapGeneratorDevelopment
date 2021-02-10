@@ -17,7 +17,7 @@ public class LoadingScreen {
     public volatile String message = "";
     private final int x,y, angleSpeed = 5, arcDiameter = M_WIDTH/8, thickness = 40;
     
-    private int startAngle = 270, angleSize = 0; 
+    private int startAngle = 90, angleSize = 0; 
     private boolean waning = false;
     
     public LoadingScreen(int x, int y){
