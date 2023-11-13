@@ -9,7 +9,7 @@ import map.Point;
 
 /**
  *
- * @author Charlie
+ * @author Tuesday
  */
 public class SmoothedAltitudeDependantLandGenerator implements LandGenerator{
 

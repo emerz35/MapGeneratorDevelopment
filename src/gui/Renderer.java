@@ -22,7 +22,7 @@ import map.Map;
 
 /**
  * The class that handles the painting of the map and GUI to the window
- * @author Charlie
+ * @author Tuesday
  */
 public class Renderer implements Runnable{
     

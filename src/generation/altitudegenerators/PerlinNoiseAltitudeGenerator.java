@@ -6,7 +6,7 @@ import map.Point;
 
 /**
  *
- * @author Charlie
+ * @author Tuesday
  */
 public class PerlinNoiseAltitudeGenerator implements AltitudeGenerator{
     

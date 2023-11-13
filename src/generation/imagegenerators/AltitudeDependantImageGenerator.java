@@ -14,7 +14,7 @@ import map.Point;
 
 /**
  *
- * @author Charlie Hands
+ * @author Tuesday Hands
  */
 public class AltitudeDependantImageGenerator implements ImageGenerator{
     

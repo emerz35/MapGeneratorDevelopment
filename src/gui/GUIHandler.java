@@ -9,7 +9,7 @@ import map.Map;
 
 /**
  * Handles mouse input
- * @author Charlie
+ * @author Tuesday
  */
 public class GUIHandler extends MouseAdapter{
     

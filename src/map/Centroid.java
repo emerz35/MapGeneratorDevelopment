@@ -4,7 +4,7 @@ import java.util.LinkedList;
 
 /**
  *
- * @author Charlie
+ * @author Tuesday
  */
 public class Centroid {
     

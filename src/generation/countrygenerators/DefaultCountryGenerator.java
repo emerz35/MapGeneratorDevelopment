@@ -15,7 +15,7 @@ import map.Settlement;
 
 /**
  *
- * @author Charlie
+ * @author Tuesday
  */
 public class DefaultCountryGenerator implements CountryGenerator{
 

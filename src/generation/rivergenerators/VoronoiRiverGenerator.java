@@ -15,7 +15,7 @@ import pathfinding.PathFinder;
 
 /**
  *
- * @author Charlie
+ * @author Tuesday
  */
 public class VoronoiRiverGenerator implements RiverGenerator{
     

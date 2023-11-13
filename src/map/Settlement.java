@@ -2,7 +2,7 @@ package map;
 
 /**
  *
- * @author Charlie
+ * @author Tuesday
  */
 public class Settlement {
     

@@ -1,8 +1,8 @@
 package exceptions;
 
 /**
- *
- * @author Charlie
+ 
+ * @author Tuesday
  */
 public class SeaNotFoundException extends Exception{
     public SeaNotFoundException(){

@@ -9,7 +9,7 @@ import static main.Main.M_WIDTH;
 
 /**
  *
- * @author Charlie Hands
+ * @author Tuesday Hands
  */
 public class LoadingScreen {
     

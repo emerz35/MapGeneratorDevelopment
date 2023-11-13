@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  *
- * @author Charlie
+ * @author Tuesday
  */
 public class Country {
     

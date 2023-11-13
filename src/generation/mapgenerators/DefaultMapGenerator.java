@@ -14,7 +14,7 @@ import map.Point;
 
 /**
  * The default map generator that will be used. It inherits from a super class MapGenerator in case there is need to create different map generators
- * @author Charlie Hands
+ * @author Tuesday Hands
  */
 public class DefaultMapGenerator extends MapGenerator{
     

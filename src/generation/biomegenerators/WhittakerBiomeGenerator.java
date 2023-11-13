@@ -15,7 +15,7 @@ import map.Point;
 
 /**
  *
- * @author Charlie
+ * @author Tuesday
  */
 public class WhittakerBiomeGenerator implements BiomeGenerator{
 

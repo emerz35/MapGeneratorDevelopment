@@ -4,7 +4,7 @@ import main.Utils;
 
 /**
  *
- * @author Charlie
+ * @author Tuesday
  */
 public class NameGenerator {
     

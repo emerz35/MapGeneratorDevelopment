@@ -6,7 +6,7 @@ import map.Point;
 
 /**
  *
- * @author Charlie Hands
+ * @author Tuesday Hands
  */
 public class VolcanoAltitudeGenerator implements AltitudeGenerator{
 

@@ -5,7 +5,7 @@ import java.awt.Canvas;
 
 /**
  * The main class. This will contain the main method that is initially run. It will also start the main loop
- * @author Charlie
+ * @author Tuesday
  * 
  */
 

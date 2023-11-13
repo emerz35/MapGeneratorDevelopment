@@ -7,7 +7,7 @@ import map.Point;
 
 /**
  *
- * @author Charlie
+ * @author Tuesday
  */
 public class LandFromAltitudeGenerator implements LandGenerator{
     

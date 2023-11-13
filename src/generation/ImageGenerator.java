@@ -5,7 +5,7 @@ import map.Point;
 
 /**
  *
- * @author Charlie 
+ * @author Tuesday 
  */
 public interface ImageGenerator {
     public BufferedImage generateImage(Point[][] map);

@@ -6,7 +6,7 @@ import map.Map;
 
 /**
  *
- * @author charl
+ * @author Tuesday
  */
 public class NoMapGenerator extends MapGenerator{
 

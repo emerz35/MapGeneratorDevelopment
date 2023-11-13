@@ -4,7 +4,7 @@ import map.Point;
 
 /**
  *
- * @author Charlie
+ * @author Tuesday
  */
 public class PathFindingPoint {
     public int cost=-1;

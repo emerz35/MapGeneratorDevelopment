@@ -8,7 +8,7 @@ import map.Map;
 
 /**
  *
- * @author Charlie
+ * @author Tuesday
  */
 public class BiomeDependantImageGenerator implements ImageGenerator{
     

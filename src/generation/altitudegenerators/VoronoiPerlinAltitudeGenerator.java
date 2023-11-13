@@ -10,7 +10,7 @@ import map.Map;
 
 /**
  *
- * @author Charlie
+ * @author Tuesday
  */
 public class VoronoiPerlinAltitudeGenerator implements AltitudeGenerator{
 

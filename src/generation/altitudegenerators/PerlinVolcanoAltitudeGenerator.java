@@ -5,7 +5,7 @@ import map.Point;
 
 /**
  *
- * @author Charlie
+ * @author Tuesday
  */
 public class PerlinVolcanoAltitudeGenerator implements AltitudeGenerator{
 
